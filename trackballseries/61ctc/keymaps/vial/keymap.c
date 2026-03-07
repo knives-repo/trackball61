@@ -84,8 +84,6 @@ void eeconfig_init_user(void){
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RSFT_T(KC_EQUAL):
-        case LT(5, KC_ENTER):
-        case LT5(KC_ENTER):
             // Immediately select the hold action when another key is tapped.
             return true;
         default:
@@ -97,11 +95,10 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_SPACE):
         case LGUI_T(KC_DELETE):
-        case LSFT_T(KC_BSLASH):
+        case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
         case LT(4, KC_ENTER):
-        case LT4(KC_ENTER):
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -113,11 +110,10 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) { // These keys may be speculatively held.
         case LGUI_T(KC_SPACE):
         case LGUI_T(KC_DELETE):
-        case LSFT_T(KC_BSLASH):
+        case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
         case LT(4, KC_ENTER):
-        case LT4(KC_ENTER):
             return true;
     }
     return false; // Disable otherwise.
@@ -132,12 +128,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
         KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSLS,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, LT3(KC_SCOLON), KC_QUOT,
+       KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, LT(3, KC_SCLN), KC_QUOT,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       LSFT_T(KC_BSLASH),    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,   LCTL_T(KC_DELETE),  RCTL_T(KC_DELETE),      KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, RSFT_T(KC_EQUAL),
+       LSFT_T(KC_BSLS),    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,   LCTL_T(KC_DELETE),  RCTL_T(KC_DELETE),      KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, RSFT_T(KC_EQUAL),
   // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
-       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,                                                                      KC_LBRACKET, KC_RBRACKET,
-                                             KC_LALT, LT4(KC_ENTER), LGUI_T(KC_SPACE),          RGUI_T(KC_SPACE),  LT4(KC_ENTER)
+       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,                                                                      KC_LBRC, KC_RBRC,
+                                             KC_LALT, LT(4, KC_ENTER), LGUI_T(KC_SPACE),          RGUI_T(KC_SPACE),  LT(4, KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 [LAYER_WIN] = LAYOUT(
@@ -146,12 +142,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_LCTRL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_LCTL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), RGUI_T(KC_DELETE),    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                                                         KC_TRNS, KC_TRNS,
-                                   KC_LALT, LT4(KC_ENTER), LCTL_T(KC_SPACE),          RCTL_T(KC_SPACE), LT4(KC_ENTER)
+                                   KC_LALT, LT(4, KC_ENTER), LCTL_T(KC_SPACE),          RCTL_T(KC_SPACE), LT(4, KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 
