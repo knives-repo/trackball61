@@ -80,6 +80,43 @@ void eeconfig_init_user(void){
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
 
 
+// tap hold configurations
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case RSFT_T(KC_EQUAL):
+        case LT(5, KC_ENTER):
+            // Immediately select the hold action when another key is tapped.
+            return true;
+        default:
+            // Do not select the hold action when another key is tapped.
+            return false;
+    }
+}
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LGUI_T(KC_SPACE):
+        case LSFT_T(KC_BSLASH):
+        case LCTL_T(KC_DELETE):
+        case LT(4, KC_ENTER):
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
+            return false;
+    }
+}
+bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
+    switch (keycode) { // These keys may be speculatively held.
+        case LGUI_T(KC_SPACE):
+        case LSFT_T(KC_BSLASH):
+        case LCTL_T(KC_DELETE):
+        case LT(4, KC_ENTER):
+            return true;
+    }
+    return false; // Disable otherwise.
+}
+
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
