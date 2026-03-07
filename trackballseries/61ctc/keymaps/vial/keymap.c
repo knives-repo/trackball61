@@ -6,11 +6,11 @@
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 enum charybdis_keymap_layers {
-    LAYER_BASE = 0,
-    LAYER_LOWER,
-    LAYER_RAISE,
+    LAYER_MAC = 0,
+    LAYER_WIN,
+    LAYER_SPECIAL,
     LAYER_POINTER,
-    LAYER_END,
+    LAYER_4,
     LAYER_5,
     LAYER_6,
     LAYER_7,
@@ -28,8 +28,8 @@ static uint16_t auto_pointer_layer_timer = 0;
 
 #endif     // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
-#define LOWER MO(LAYER_LOWER)
-#define RAISE MO(LAYER_RAISE)
+#define LOWER MO(LAYER_WIN)
+#define RAISE MO(LAYER_SPECIAL)
 #define PT_Z LT(LAYER_POINTER, KC_Z)
 #define PT_SLSH LT(LAYER_POINTER, KC_SLSH)
 
@@ -122,7 +122,7 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [LAYER_BASE] = LAYOUT(
+  [LAYER_MAC] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮               ╭──────────────────────────────────────────────────────╮
         KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
@@ -136,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                              KC_LALT, LT4(KC_ENTER), LGUI_T(KC_SPACE),          RGUI_T(KC_SPACE),  LT5(KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
-  [LAYER_LOWER] = LAYOUT(
+  [LAYER_WIN] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
        KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
@@ -151,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 
-  [LAYER_RAISE] = LAYOUT(
+  [LAYER_SPECIAL] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮               ╭──────────────────────────────────────────────────────╮
         KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
@@ -180,7 +180,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             KC_LALT, KC_BSPC, KC_LALT,        KC_BTN1, KC_BTN2
  //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
-  [LAYER_END] = LAYOUT(
+  [LAYER_4] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮               ╭──────────────────────────────────────────────────────╮
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
@@ -749,19 +749,19 @@ static void slave_data(void) {
 //    oled_set_cursor(0, 9);
 
     switch (get_highest_layer(layer_state)) {
-        case LAYER_BASE:
+        case LAYER_MAC:
             oled_write("  0  ", false);
             break;
-        case LAYER_LOWER:
+        case LAYER_WIN:
             oled_write("  1  ", false);
             break;
-        case LAYER_RAISE:
+        case LAYER_SPECIAL:
             oled_write("  2  ", false);
             break;
         case LAYER_POINTER:
             oled_write("3", false);
             break;
-        case LAYER_END:
+        case LAYER_4:
             oled_write("  4  ", false);
             break;
         case LAYER_5:
