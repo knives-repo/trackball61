@@ -96,8 +96,10 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_SPACE):
+        case LGUI_T(KC_DELETE):
         case LSFT_T(KC_BSLASH):
         case LCTL_T(KC_DELETE):
+        case LCTL_T(KC_SPACE):
         case LT(4, KC_ENTER):
         case LT4(KC_ENTER):
             // Immediately select the hold action when another key is pressed.
@@ -110,8 +112,10 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) { // These keys may be speculatively held.
         case LGUI_T(KC_SPACE):
+        case LGUI_T(KC_DELETE):
         case LSFT_T(KC_BSLASH):
         case LCTL_T(KC_DELETE):
+        case LCTL_T(KC_SPACE):
         case LT(4, KC_ENTER):
         case LT4(KC_ENTER):
             return true;
@@ -124,7 +128,7 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_MAC] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮               ╭──────────────────────────────────────────────────────╮
-        KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,
+        KC_GESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
         KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSLS,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
@@ -136,20 +140,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                              KC_LALT, LT4(KC_ENTER), LGUI_T(KC_SPACE),          RGUI_T(KC_SPACE),  LT5(KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
-  [LAYER_WIN] = LAYOUT(
+[LAYER_WIN] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
-       KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       RGB_MOD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_LBRC,   KC_P7,   KC_P8,   KC_P9, KC_RBRC, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       RGB_TOG, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_TRNS,                      KC_PPLS,   KC_P4,   KC_P5,   KC_P6, KC_PMNS, KC_PEQL,
+       KC_LCTRL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-      RGB_RMOD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_B,      KC_N,   KC_PAST,   KC_P1,   KC_P2,   KC_P3, KC_PSLS, KC_PDOT,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), RGUI_T(KC_DELETE),    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_LGUI,   KC_SPC,   LOWER,   KC_LALT,                                                                      PT_SLSH, KC_LALT,
-                                             KC_LALT, KC_BSPC, KC_LALT,          RAISE, KC_DEL
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                                                         KC_TRNS, KC_TRNS,
+                                   KC_LALT, LT4(KC_ENTER), LCTL_T(KC_SPACE),          RCTL_T(KC_SPACE), LT5(KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
-  ),
+),
 
   [LAYER_SPECIAL] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮               ╭──────────────────────────────────────────────────────╮
