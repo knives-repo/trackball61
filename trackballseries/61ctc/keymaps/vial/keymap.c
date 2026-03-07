@@ -137,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        LSFT_T(KC_BSLASH),    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,   LCTL_T(KC_DELETE),  RCTL_T(KC_DELETE),      KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, RSFT_T(KC_EQUAL),
   // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,                                                                      KC_LBRACKET, KC_RBRACKET,
-                                             KC_LALT, LT4(KC_ENTER), LGUI_T(KC_SPACE),          RGUI_T(KC_SPACE),  LT5(KC_ENTER)
+                                             KC_LALT, LT4(KC_ENTER), LGUI_T(KC_SPACE),          RGUI_T(KC_SPACE),  LT4(KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 [LAYER_WIN] = LAYOUT(
@@ -151,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), RGUI_T(KC_DELETE),    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                                                         KC_TRNS, KC_TRNS,
-                                   KC_LALT, LT4(KC_ENTER), LCTL_T(KC_SPACE),          RCTL_T(KC_SPACE), LT5(KC_ENTER)
+                                   KC_LALT, LT4(KC_ENTER), LCTL_T(KC_SPACE),          RCTL_T(KC_SPACE), LT4(KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 
@@ -186,16 +186,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
   [LAYER_4] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_F12, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,                       KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_HOME, KC_UP,   KC_END,  KC_MRWD, KC_VOLU,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_MFFD, KC_VOLD,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY, KC_MUTE,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                                                         KC_TRNS, KC_TRNS,
-                                   KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                                                     KC_TRNS, KC_TRNS,
+                                  KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
    [LAYER_5] = LAYOUT(
