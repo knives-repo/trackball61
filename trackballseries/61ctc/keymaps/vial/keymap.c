@@ -85,6 +85,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RSFT_T(KC_EQUAL):
         case LT(5, KC_ENTER):
+        case LT5(KC_ENTER):
             // Immediately select the hold action when another key is tapped.
             return true;
         default:
@@ -98,6 +99,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_BSLASH):
         case LCTL_T(KC_DELETE):
         case LT(4, KC_ENTER):
+        case LT4(KC_ENTER):
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -111,6 +113,7 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
         case LSFT_T(KC_BSLASH):
         case LCTL_T(KC_DELETE):
         case LT(4, KC_ENTER):
+        case LT4(KC_ENTER):
             return true;
     }
     return false; // Disable otherwise.
@@ -125,12 +128,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
         KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSLS,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
+       KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       KC_LCTL,    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_B,  KC_N,      KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_RSFT,
+       LSFT_T(KC_BSLASH),    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,   LCTL_T(KC_DELETE),  RCTL_T(KC_DELETE),      KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, RSFT_T(KC_EQUAL),
   // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
-       KC_LGUI,   KC_SPC,   LOWER,   KC_LALT,                                                                      KC_RALT, KC_PSCR,
-                                             KC_LALT, KC_BSPC, KC_LALT,          RAISE,  KC_DEL
+       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,                                                                      KC_LBRACKET, KC_RBRACKET,
+                                             KC_LALT, LT4(KC_ENTER), LGUI_T(KC_SPACE),          RGUI_T(KC_SPACE),  LT5(KC_ENTER)
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
   [LAYER_LOWER] = LAYOUT(
