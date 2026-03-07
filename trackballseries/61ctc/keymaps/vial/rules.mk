@@ -6,3 +6,4 @@ VIAL_INSECURE = yes
 OLED_ENABLE         = yes
 EXTRAKEY_ENABLE     = yes
 WPM_ENABLE = yes
+GRAVE_ESC_ENABLE = yes
