@@ -166,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), RGUI_T(KC_DELETE), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       LT(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(3, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(3, KC_ENTER), KC_TRNS, KC_TRNS                              
+       MO(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(3, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(3, KC_ENTER), KC_TRNS, KC_TRNS                              
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 
