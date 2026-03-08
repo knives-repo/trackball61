@@ -18,15 +18,12 @@ enum charybdis_keymap_layers {
     LAYER_MOUSE,
 };
 
-/**
-在这里定义的层，切到该层这个层就变为自动阻击层
-*/
-// #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
+// Pointer options
+// #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER //this activates sniping when the specified layer is activated
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 static uint16_t auto_pointer_layer_timer = 0;
-
-#endif     // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#endif    // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 #define LOWER MO(LAYER_WIN)
 #define RAISE MO(LAYER_SPECIAL)
@@ -38,7 +35,7 @@ static uint16_t auto_pointer_layer_timer = 0;
 #    define DPI_MOD KC_NO
 #    define S_D_MOD KC_NO
 #    define SNIPING KC_NO
-#endif // !POINTING_DEVICE_ENABLE
+#endif    // !POINTING_DEVICE_ENABLE
 
 typedef union {
     uint32_t raw1;
