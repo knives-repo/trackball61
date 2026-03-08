@@ -21,7 +21,7 @@ enum charybdis_keymap_layers {
 /**
 在这里定义的层，切到该层这个层就变为自动阻击层
 */
-#define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
+// #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 static uint16_t auto_pointer_layer_timer = 0;
@@ -132,7 +132,6 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
     return false; // Disable otherwise.
 }
 
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_MAC] = LAYOUT(
@@ -163,18 +162,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
   [LAYER_SPECIAL] = LAYOUT(
-  // ╭──────────────────────────────────────────────────────╮               ╭──────────────────────────────────────────────────────╮
-        KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
-  // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       KC_MNXT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLU,
-  // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       KC_MPLY, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,                  KC_TRNS, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI, KC_MUTE,
-  // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       KC_MPRV, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, KC_TRNS,   KC_B,   KC_N,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD,
-  // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
-      KC_LGUI,   KC_SPC,   LOWER,   KC_LALT,                                                                      PT_SLSH, KC_LALT,
-                                            KC_LALT, KC_BSPC, KC_LALT,        RAISE, KC_DEL
- //                            ╰───────────────────────────╯               ╰──────────────────╯
+  // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS
+  //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 
   [LAYER_POINTER] = LAYOUT(
@@ -187,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_TRNS,                     TG(1), QK_BOOT
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, TG(3),                     TG(1), QK_BOOT
                                    
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
