@@ -748,19 +748,19 @@ static void slave_data(void) {
 
     switch (get_highest_layer(layer_state)) {
         case LAYER_MAC:
-            oled_write("  0  ", false);
+            oled_write("Mac", false);
             break;
         case LAYER_WIN:
-            oled_write("  1  ", false);
+            oled_write("Windows", false);
             break;
         case LAYER_SPECIAL:
-            oled_write("  2  ", false);
+            oled_write("Special", false);
             break;
         case LAYER_POINTER:
             oled_write("3", false);
             break;
         case LAYER_4:
-            oled_write("  4  ", false);
+            oled_write("Function", false);
             break;
         case LAYER_5:
             oled_write("  5  ", false);
@@ -775,7 +775,7 @@ static void slave_data(void) {
             oled_write("  8  ", false);
             break;
         case LAYER_MOUSE:
-            oled_write("Mouse", false);
+            oled_write("Trackball", false);
             break;
         default:
             oled_write("Undef", false);
