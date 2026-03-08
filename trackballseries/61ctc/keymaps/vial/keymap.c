@@ -81,6 +81,19 @@ void eeconfig_init_user(void){
 
 
 // tap hold configurations
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LGUI_T(KC_SPACE):
+        case LGUI_T(KC_DELETE):
+        case LSFT_T(KC_BSLS):
+        case LCTL_T(KC_DELETE):
+        case LCTL_T(KC_SPACE):
+        case LT(4, KC_ENTER):
+            return 125;
+        default:
+            return TAPPING_TERM;
+    }
+}
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RSFT_T(KC_EQUAL):
