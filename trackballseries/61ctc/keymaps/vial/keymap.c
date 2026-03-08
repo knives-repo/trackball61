@@ -153,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
        LSFT_T(KC_BSLS), PT_Z, KC_X, KC_C, KC_V, KC_B, LCTL_T(KC_DELETE), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, KC_DOT, PT_SLSH, RSFT_T(KC_EQUAL),
   // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
-       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS, LALT_T(KC_BSPC), LT(3, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(3, KC_ENTER), KC_LBRC, KC_RBRC
+       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_GRV, LALT_T(KC_BSPC), LT(3, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(3, KC_ENTER), KC_LBRC, KC_RBRC
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 [LAYER_WIN] = LAYOUT(
@@ -166,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), RGUI_T(KC_DELETE), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LALT, LT(3, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(3, KC_ENTER), KC_TRNS, KC_TRNS                              
+       LT(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(3, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(3, KC_ENTER), KC_TRNS, KC_TRNS                              
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 
@@ -257,9 +257,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, MS_BTN1, MS_BTN2, DRGSCRL, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     T_SAVE, KC_TRNS, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     T_SAVE, AUTO_MODE_TOGGLE, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             AUTO_MODE_TOGGLE, TG(1),               KC_TRNS, QK_BOOT                 
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              TG(1), QK_BOOT                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
   [LAYER_MOUSE] = LAYOUT(
