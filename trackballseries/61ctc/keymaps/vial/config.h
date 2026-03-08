@@ -44,8 +44,6 @@
 
 // Automatically enable the pointer layer when moving the trackball
 #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-#define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
-#define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 8
 
 // Rotation angle, change the angle of the ball. The rotation angle only supports -127 to 127.
 #undef ROTATIONAL_TRANSFORM_ANGLE
