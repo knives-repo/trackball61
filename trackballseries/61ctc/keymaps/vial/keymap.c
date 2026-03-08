@@ -5,6 +5,22 @@
 #    include "timer.h"
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
+enum custom_keycodes {
+    AUTO_MODE_TOGGLE = SAFE_RANGE,
+    AUTO_TIME_50,
+    AUTO_TIME_50R,
+    AUTO_TIME_100,
+    AUTO_THRESHOLD,
+    TInfo,
+    T_SAVE,
+    QM_PND,
+    QM_EURO,
+    QM_EMD,
+    QM_PLCR,
+    QM_SLCR,
+    QM_BULL
+};
+
 enum charybdis_keymap_layers {
     LAYER_MAC = 0,
     LAYER_WIN,
@@ -108,7 +124,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
-        case LT(4, KC_ENTER):
+        case LT(3, KC_ENTER):
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -123,7 +139,7 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
-        case LT(4, KC_ENTER):
+        case LT(3, KC_ENTER):
             return true;
     }
     return false; // Disable otherwise.
@@ -141,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
        LSFT_T(KC_BSLS), PT_Z, KC_X, KC_C, KC_V, KC_B, LCTL_T(KC_DELETE), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, KC_DOT, PT_SLSH, RSFT_T(KC_EQUAL),
   // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
-       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS, KC_LALT, LT(4, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(4, KC_ENTER), KC_LBRC, KC_RBRC
+       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS, KC_LALT, LT(3, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(3, KC_ENTER), KC_LBRC, KC_RBRC
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 [LAYER_WIN] = LAYOUT(
@@ -154,13 +170,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), RGUI_T(KC_DELETE), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LALT, LT(4, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(4, KC_ENTER), KC_TRNS, KC_TRNS                              
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LALT, LT(3, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(3, KC_ENTER), KC_TRNS, KC_TRNS                              
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 
   [LAYER_SPECIAL] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, QM_PND, QM_EURO, QM_SLCR,                      KC_TRNS, QM_PLCR, QM_BULL, KC_TRNS, KC_TRNS, QM_EMD,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
@@ -241,13 +257,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, DPI_MOD, S_D_MOD, SNIPING, AUTO_TIME_50, AUTO_THRESHOLD,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, DPI_MOD, S_D_MOD, AUTO_TIME_50, AUTO_THRESHOLD, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, MS_BTN1, MS_BTN2, DRGSCRL, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     T_SAVE, KC_TRNS, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             AUTO_MODE_TOGGLE, TG(8),               TG(1), QK_BOOT                 
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             AUTO_MODE_TOGGLE, TG(1),               KC_TRNS, QK_BOOT                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
   [LAYER_MOUSE] = LAYOUT(
@@ -370,6 +386,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 eeconfig_update_user(user_config.raw1);
             } // 保存自动切层的设置
             return false; // prevent further processing of keycode
+        case QM_PND: // Alt + 0163
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_1)SS_TAP(X_KP_6)SS_TAP(X_KP_3)));
+            return false;
+        case QM_EURO: // Alt + 0128
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_1)SS_TAP(X_KP_2)SS_TAP(X_KP_8)));
+            return false;
+        case QM_EMD: // Alt + 0151
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_1)SS_TAP(X_KP_5)SS_TAP(X_KP_1)));
+            return false;
+        case QM_PLCR: // Alt + 0182
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_1)SS_TAP(X_KP_8)SS_TAP(X_KP_2)));
+            return false;
+        case QM_SLCR: // Alt + 0167
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_1)SS_TAP(X_KP_6)SS_TAP(X_KP_7)));
+            return false;
+        case QM_BULL: // Alt + 7
+            SEND_STRING(SS_LALT(SS_TAP(X_KP_7)));
+            return false;
     }
     return true;
 }
