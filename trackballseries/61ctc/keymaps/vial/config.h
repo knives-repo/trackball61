@@ -43,7 +43,7 @@
 #ifdef POINTING_DEVICE_ENABLE
 
 // Automatically enable the pointer layer when moving the trackball
-// #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 // Rotation angle, change the angle of the ball. The rotation angle only supports -127 to 127.
 #undef ROTATIONAL_TRANSFORM_ANGLE
