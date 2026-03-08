@@ -259,7 +259,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     T_SAVE, AUTO_MODE_TOGGLE, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              TG(1), QK_BOOT                 
+       QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              TG(1), QK_BOOT                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
   [LAYER_MOUSE] = LAYOUT(
