@@ -34,6 +34,7 @@
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define FLOW_TAP_TERM 75
 #define SPECULATIVE_HOLD
+#define QUICK_TAP_TERM 0
 
 /* Charybdis-specific features. */
 #ifdef POINTING_DEVICE_ENABLE
