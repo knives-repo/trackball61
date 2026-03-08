@@ -101,7 +101,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
-        case LT(4, KC_ENTER):
+        case LALT_T(KC_BSPC):
+        case LT(3, KC_ENTER):
             return 125;
         default:
             return TAPPING_TERM;
@@ -124,6 +125,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
+        case LALT_T(KC_BSPC):
         case LT(3, KC_ENTER):
             // Immediately select the hold action when another key is pressed.
             return true;
@@ -139,6 +141,7 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
+        case LALT_T(KC_BSPC):
         case LT(3, KC_ENTER):
             return true;
     }
@@ -157,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
        LSFT_T(KC_BSLS), PT_Z, KC_X, KC_C, KC_V, KC_B, LCTL_T(KC_DELETE), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, KC_DOT, PT_SLSH, RSFT_T(KC_EQUAL),
   // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
-       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS, KC_LALT, LT(3, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(3, KC_ENTER), KC_LBRC, KC_RBRC
+       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS, LALT_T(KC_BSPC), LT(3, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(3, KC_ENTER), KC_LBRC, KC_RBRC
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 [LAYER_WIN] = LAYOUT(
