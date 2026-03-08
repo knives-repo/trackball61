@@ -6,14 +6,7 @@
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 enum custom_keycodes {
-    AUTO_MODE_TOGGLE = SAFE_RANGE,
-    AUTO_TIME_50,
-    AUTO_TIME_50R,
-    AUTO_TIME_100,
-    AUTO_THRESHOLD,
-    TInfo,
-    T_SAVE,
-    QM_PND,
+    QM_PND = SAFE_RANGE,
     QM_EURO,
     QM_EMD,
     QM_PLCR,
