@@ -19,7 +19,7 @@ enum charybdis_keymap_layers {
 };
 
 // Pointer options
-#define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER // this activates sniping when the specified layer is activated
+#define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 static uint16_t auto_pointer_layer_timer = 0;
