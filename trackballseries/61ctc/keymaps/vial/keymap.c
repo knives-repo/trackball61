@@ -56,7 +56,7 @@ void keyboard_post_init_user(void){
 void eeconfig_init_user(void){
     user_config.raw1 = 0;
     user_config.auto_time = 0;
-    user_config.is_auto_enabled = 1;
+    user_config.is_auto_enabled = 0;
     user_config.threshold_value = 1;
     user_config.is_oled_enabled = 0;
     eeconfig_update_user(user_config.raw1);
