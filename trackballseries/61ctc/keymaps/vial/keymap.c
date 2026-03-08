@@ -9,12 +9,12 @@ enum charybdis_keymap_layers {
     LAYER_MAC = 0,
     LAYER_WIN,
     LAYER_SPECIAL,
-    LAYER_POINTER,
+    LAYER_3,
     LAYER_4,
     LAYER_5,
     LAYER_6,
     LAYER_7,
-    LAYER_8,
+    LAYER_POINTER,
     LAYER_MOUSE,
 };
 
@@ -172,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                            ╰───────────────────────────╯               ╰──────────────────╯
   ),
 
-  [LAYER_POINTER] = LAYOUT(
+  [LAYER_3 = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
@@ -238,7 +238,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
-   [LAYER_8] = LAYOUT(
+   [LAYER_POINTER] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
@@ -748,19 +748,19 @@ static void slave_data(void) {
 
     switch (get_highest_layer(layer_state)) {
         case LAYER_MAC:
-            oled_write("Mac", false);
+            oled_write(" MAC ", false);
             break;
         case LAYER_WIN:
-            oled_write("Windows", false);
+            oled_write(" WIN ", false);
             break;
         case LAYER_SPECIAL:
-            oled_write("Special", false);
+            oled_write(" EX  ", false);
             break;
-        case LAYER_POINTER:
-            oled_write("3", false);
+        case LAYER_3:
+            oled_write(" Fn  ", false);
             break;
         case LAYER_4:
-            oled_write("Function", false);
+            oled_write("  4  ", false);
             break;
         case LAYER_5:
             oled_write("  5  ", false);
@@ -771,11 +771,11 @@ static void slave_data(void) {
         case LAYER_7:
             oled_write("  7  ", false);
             break;
-        case LAYER_8:
-            oled_write("  8  ", false);
+        case LAYER_POINTER:
+            oled_write("SNIPE", false);
             break;
         case LAYER_MOUSE:
-            oled_write("Trackball", false);
+            oled_write("TRACK", false);
             break;
         default:
             oled_write("Undef", false);
