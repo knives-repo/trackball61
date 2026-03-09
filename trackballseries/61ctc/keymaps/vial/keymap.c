@@ -97,6 +97,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LALT_T(KC_BSPC):
         case LT(3, KC_ENTER):
             return 125;
+        case LT(8, KC_SCLN):
+            return 150;
         default:
             return TAPPING_TERM;
     }
@@ -104,6 +106,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RSFT_T(KC_EQUAL):
+        case LT(8, KC_SCLN):
             // Immediately select the hold action when another key is tapped.
             return true;
         default:
@@ -136,6 +139,7 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
         case LCTL_T(KC_SPACE):
         case LALT_T(KC_BSPC):
         case LT(3, KC_ENTER):
+        case LT(8, KC_SCLN):
             return true;
     }
     return false; // Disable otherwise.
