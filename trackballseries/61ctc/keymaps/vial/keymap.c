@@ -438,9 +438,14 @@ uint16_t startup_timer = 0;
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
      if (is_keyboard_master()){
-        return rotation;
-    }else{
-        return rotation; //OLED_ROTATION_270;
+        // Look at the saved config immediately on boot
+        if (user_config.is_oled_enabled) {
+            return OLED_ROTATION_0;    // TInfo Mode
+        } else {
+            return OLED_ROTATION_270;  // Ocean Dream Mode
+        }
+    } else {
+        return OLED_ROTATION_270;
         }
 }
 
@@ -866,8 +871,8 @@ static void tv_ms(void) {
 
 //主设备OLED
 static void master_data(void) {
-    // Track the previous OLED mode to detect transitions
-    static bool last_oled_state = false;
+    // Initialize to the OPPOSITE of current config to force a refresh on the first loop
+    static bool last_oled_state = 2; // Using 2 (or any non-bool) forces the first check
 
     // If the OLED mode changed, update rotation and clear
     if (user_config.is_oled_enabled != last_oled_state) {
@@ -879,7 +884,6 @@ static void master_data(void) {
             // Animation mode
             oled_init(OLED_ROTATION_270); // vertical
         }
-
         oled_clear();
         last_oled_state = user_config.is_oled_enabled;
     }
