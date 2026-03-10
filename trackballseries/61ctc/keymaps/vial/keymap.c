@@ -661,7 +661,7 @@ uint32_t anim_timer1 = 0;
 uint8_t current_frame1 = 0;
 
 /* status variables */
-int   current_wpm = 0;
+// int   current_wpm = 0; // commented out as it is already in ocean_dream.c
 led_t led_usb_state;
 
 bool isSneaking = false;
