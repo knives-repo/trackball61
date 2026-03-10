@@ -866,13 +866,21 @@ static void tv_ms(void) {
 
 //主设备OLED
 static void master_data(void) {
+   // Keep track of the last OLED state to clear the screen on transition
+   static bool last_oled_state = false;
+   if (user_config.is_oled_enabled != last_oled_state) {
+       oled_clear();
+       last_oled_state = user_config.is_oled_enabled;
+   }
 
    if(user_config.is_oled_enabled){
-       tv_ms();
+       tv_ms(); // Reminder: Make sure there is no oled_clear() inside this function!
    }else{
         # ifdef OCEAN_DREAM_ENABLE
             render_stars();
         # endif
+   }
+}
         //oled_set_cursor(0, 0);
         //render_cat();
         //char string[10];
@@ -881,12 +889,6 @@ static void master_data(void) {
             //char wpm_str[6];
             //snprintf(wpm_str, sizeof(wpm_str), "%d", m);
             //oled_write(wpm_str, false);
-   }
-
-
-
-}
-
 
 bool oled_task_user(void) {
 
