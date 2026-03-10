@@ -33,8 +33,8 @@
  */
 #define STARRY_NIGHT_ANIM_FRAME_DURATION 30  // how long each frame lasts in ms
 #define NUMBER_OF_FRAMES 20                  // Self explanatory. Probably shouldn't touch this, not sure how stuff will work if it's changed. If changed should be multiple of 1, 2, 3, 4, and 5
-#define WIDTH OLED_DISPLAY_HEIGHT = 128            // for vertical displays
-#define HEIGHT OLED_DISPLAY_WIDTH = 64            // for vertical displays
+#define WIDTH OLED_DISPLAY_HEIGHT           // for vertical displays
+#define HEIGHT OLED_DISPLAY_WIDTH            // for vertical displays
 
 /**
  * Moon Parameters
