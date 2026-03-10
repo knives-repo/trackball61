@@ -22,11 +22,11 @@
  * Features:
  * You can turn on and off features in this section
  */
-#define ENABLE_MOON = no            // Uses 182 bytes
-#define ENABLE_WAVE = yes           // Uses 844 bytes
+#define ENABLE_MOON            // Uses 182 bytes
+#define ENABLE_WAVE           // Uses 844 bytes
 #define ENABLE_SHOOTING_STARS  // Uses 872 bytes
-#define ENABLE_ISLAND = yes
-#define ENABLE_STARS = yes  // Uses 606 bytes
+#define ENABLE_ISLAND
+#define ENABLE_STARS  // Uses 606 bytes
 
 /**
  * Global Settings
