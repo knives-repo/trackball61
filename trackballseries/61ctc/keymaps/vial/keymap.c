@@ -438,7 +438,7 @@ uint16_t startup_timer = 0;
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
      if (is_keyboard_master()){
-        return rotation;
+        return OLED_ROTATION_270;
     }else{
         return rotation; //OLED_ROTATION_270;
         }
