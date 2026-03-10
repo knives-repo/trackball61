@@ -642,7 +642,7 @@ static void render_cat(void) {
 //        oled_on();
 //    }
 //    #endif
-}
+//}
 
 
 /* settings */
