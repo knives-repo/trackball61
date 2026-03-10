@@ -917,8 +917,8 @@ bool oled_task_user(void) {
             // Explicitly ensure it stays off if the master is off
             oled_off();
     }
+    }
     return false;
-}
 }
 #endif
 
