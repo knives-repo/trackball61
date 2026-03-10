@@ -79,3 +79,9 @@
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #endif  // POINTING_DEVICE_ENABLE
 
+/* Ocean Dream Animation Components */
+#define ENABLE_WAVE
+#define ENABLE_ISLAND
+#define ENABLE_STARS
+#define ENABLE_SHOOTING_STARS
+#define ENABLE_MOON
