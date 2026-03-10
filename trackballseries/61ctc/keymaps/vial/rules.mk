@@ -5,8 +5,7 @@ VIAL_INSECURE = no
 
 OLED_ENABLE         = yes
 OCEAN_DREAM_ENABLE = yes
+
 EXTRAKEY_ENABLE     = yes
 WPM_ENABLE = yes
 GRAVE_ESC_ENABLE = yes
-
-//SRC += ocean_dream.c
