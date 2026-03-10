@@ -1,5 +1,7 @@
 
 #include QMK_KEYBOARD_H
+#include keymaps/vial/ocean_dream.c
+#include keymaps/vial/ocean_dream.h
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
