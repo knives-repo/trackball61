@@ -634,21 +634,20 @@ static void render_cat(void) {
         }
     }
 */
-
-//    #if OLED_TIMEOUT > 0
-//    /* the animation prevents the normal timeout from occuring
-//    last_input_activity_elapsed返回自上次输入活动（按键和编码器使用）以来的时间
-//    自上次LED活动以来的毫秒数
-//    */
-//    if (last_input_activity_elapsed() > OLED_TIMEOUT) {
-////        oled_clear();
-//        oled_off();
-//        return;
-//    } else {
-//        oled_on();
-//    }
-//    #endif
-//}
+#if OLED_TIMEOUT > 0
+/* the animation prevents the normal timeout from occuring
+last_input_activity_elapsed返回自上次输入活动（按键和编码器使用）以来的时间
+自上次LED活动以来的毫秒数
+*/
+if (last_input_activity_elapsed() > OLED_TIMEOUT) {
+        oled_clear();
+        oled_off();
+        return;
+   } else {
+       oled_on();
+    }
+    #endif
+}
 
 
 /* settings */
@@ -656,7 +655,7 @@ static void render_cat(void) {
 #    define MIN_RUN_SPEED       40
 
 /* advanced settings */
-#    define ANIM_FRAME_DURATION 200  // how long each frame lasts in ms
+#    define ANIM_FRAME_DURATION 150  // how long each frame lasts in ms
 #    define ANIM_SIZE1           96   // number of bytes in array. If you change sprites, minimize for adequate firmware size. max is 1024
 
 /* timers */
@@ -669,8 +668,8 @@ uint8_t current_frame1 = 0;
 // int   current_wpm = 0; // commented out as it is already in ocean_dream.c
 led_t led_usb_state;
 
-bool isSneaking = false;
-bool isJumping  = false;
+bool isSneaking = true;
+bool isJumping  = true;
 bool showedJump = true;
 
 
