@@ -634,11 +634,13 @@ static void render_cat(void) {
         }
     }
 */
+
+/*
 #if OLED_TIMEOUT > 0
-/* the animation prevents the normal timeout from occuring
-last_input_activity_elapsed返回自上次输入活动（按键和编码器使用）以来的时间
-自上次LED活动以来的毫秒数
-*/
+// the animation prevents the normal timeout from occuring
+//last_input_activity_elapsed返回自上次输入活动（按键和编码器使用）以来的时间
+//自上次LED活动以来的毫秒数
+
 if (last_input_activity_elapsed() > OLED_TIMEOUT) {
         oled_clear();
         oled_off();
@@ -647,8 +649,8 @@ if (last_input_activity_elapsed() > OLED_TIMEOUT) {
        oled_on();
     }
     #endif
-//}
-
+}
+*/
 
 /* settings */
 #    define MIN_WALK_SPEED      10
