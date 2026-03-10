@@ -866,34 +866,32 @@ static void tv_ms(void) {
 
 //主设备OLED
 static void master_data(void) {
-   // Keep track of the last OLED state to clear the screen on transition
-   static bool last_oled_state = false;
-   if (user_config.is_oled_enabled != last_oled_state) {
-       oled_clear();
-       last_oled_state = user_config.is_oled_enabled;
-   }
-    
+    // Track the previous OLED mode to detect transitions
+    static bool last_oled_state = false;
+
+    // If the OLED mode changed, update rotation and clear
     if (user_config.is_oled_enabled != last_oled_state) {
-       if (user_config.is_oled_enabled) {
-           // TInfo is being turned ON: Use horizontal rotation for text
-           // Use OLED_ROTATION_0 or OLED_ROTATION_180 depending on mounting
-           oled_init(OLED_ROTATION_0); 
-       } else {
-           // TInfo is being turned OFF (Animation mode): Return to vertical
-           oled_init(OLED_ROTATION_270);
-       }
-       
-       oled_clear(); // Clear the buffer after re-initializing rotation
-       last_oled_state = user_config.is_oled_enabled;
-   }
-    
-   if(user_config.is_oled_enabled){
-       tv_ms(); // Reminder: Make sure there is no oled_clear() inside this function!
-   }else{
-        # ifdef OCEAN_DREAM_ENABLE
+
+        if (user_config.is_oled_enabled) {
+            // Text mode
+            oled_init(OLED_ROTATION_0);   // horizontal
+        } else {
+            // Animation mode
+            oled_init(OLED_ROTATION_270); // vertical
+        }
+
+        oled_clear();
+        last_oled_state = user_config.is_oled_enabled;
+    }
+
+    // Render current mode
+    if (user_config.is_oled_enabled) {
+        tv_ms();   // ensure this function does NOT call oled_clear()
+    } else {
+        #ifdef OCEAN_DREAM_ENABLE
             render_stars();
-        # endif
-   }
+        #endif
+    }
 }
         //oled_set_cursor(0, 0);
         //render_cat();
