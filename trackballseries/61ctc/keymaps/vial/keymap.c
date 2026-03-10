@@ -406,6 +406,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case QM_BULL: // Alt + 7
             SEND_STRING(SS_LALT(SS_TAP(X_KP_7)));
             return false;
+        // activates is_calm for ocean dream animation
+        case KC_LCTL:
+        case KC_RCTL:
+            #ifdef OCEAN_DREAM_ENABLE
+                        is_calm = (record->event.pressed) ? true : false;
+            #endif
+            break;
     }
     return true;
 }
@@ -578,19 +585,6 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
     } else {
         oled_write_P(shift_off_2, false);
     }
-}
-
-// this adds an event which sets the ocean dream OLED animation is_calm when ctrl is pressed
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case KC_LCTL:
-        case KC_RCTL:
-#ifdef OCEAN_DREAM_ENABLE
-            is_calm = (record->event.pressed) ? true : false;
-#endif
-            break;
-    }
-    return true;
 }
 
 /*
