@@ -912,13 +912,38 @@ bool oled_task_user(void) {
     led_usb_state = host_keyboard_led_state();
     if (is_keyboard_master()) {
         master_data();
-    }else{
+    }
+    /*    
+    else{
         if (is_oled_on()) {
             slave_data(); 
         } else {
             // Explicitly ensure it stays off if the master is off
             oled_off();
     }
+    }
+    */
+    else {
+    static bool last_slave_on = false;
+        bool current_slave_on = is_oled_on();
+
+        if (current_slave_on != last_slave_on) {
+            if (!current_slave_on) {
+                oled_off(); // Force off only ONCE
+            } else {
+                oled_init(OLED_ROTATION_270); // Reset rotation only ONCE on wake
+            }
+            last_slave_on = current_slave_on;
+        }
+
+        // ONLY render if we are sure the master wants us on
+        if (current_slave_on) {
+            slave_data();
+        }
+        if (current_slave_on) {
+            trackball_oled_info();
+            slave_data(); 
+            }
     }
     return false;
 }
