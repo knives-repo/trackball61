@@ -647,7 +647,7 @@ if (last_input_activity_elapsed() > OLED_TIMEOUT) {
        oled_on();
     }
     #endif
-}
+//}
 
 
 /* settings */
