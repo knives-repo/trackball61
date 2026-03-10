@@ -22,19 +22,19 @@
  * Features:
  * You can turn on and off features in this section
  */
-#define ENABLE_MOON            // Uses 182 bytes
-#define ENABLE_WAVE            // Uses 844 bytes
+#define ENABLE_MOON = no            // Uses 182 bytes
+#define ENABLE_WAVE = yes           // Uses 844 bytes
 #define ENABLE_SHOOTING_STARS  // Uses 872 bytes
-#define ENABLE_ISLAND
-#define ENABLE_STARS  // Uses 606 bytes
+#define ENABLE_ISLAND = yes
+#define ENABLE_STARS = yes  // Uses 606 bytes
 
 /**
  * Global Settings
  */
 #define STARRY_NIGHT_ANIM_FRAME_DURATION 30  // how long each frame lasts in ms
 #define NUMBER_OF_FRAMES 20                  // Self explanatory. Probably shouldn't touch this, not sure how stuff will work if it's changed. If changed should be multiple of 1, 2, 3, 4, and 5
-#define WIDTH OLED_DISPLAY_HEIGHT            // for vertical displays
-#define HEIGHT OLED_DISPLAY_WIDTH            // for vertical displays
+#define WIDTH OLED_DISPLAY_HEIGHT = 128            // for vertical displays
+#define HEIGHT OLED_DISPLAY_WIDTH = 64            // for vertical displays
 
 /**
  * Moon Parameters
