@@ -940,10 +940,6 @@ bool oled_task_user(void) {
         if (current_slave_on) {
             slave_data();
         }
-        if (current_slave_on) {
-            trackball_oled_info();
-            slave_data(); 
-            }
     }
     return false;
 }
