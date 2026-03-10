@@ -438,7 +438,7 @@ uint16_t startup_timer = 0;
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
      if (is_keyboard_master()){
-        return OLED_ROTATION_270;
+        return rotation;
     }else{
         return rotation; //OLED_ROTATION_270;
         }
@@ -828,7 +828,7 @@ static void slave_data(void) {
 }
 
 static void tv_ms(void) {
-    oled_clear();
+    // oled_clear(); //removed as added above
     //   鼠标模式OLED
     oled_write_P(PSTR("AutoL:"), false);
     char auto_m[2];
@@ -872,7 +872,21 @@ static void master_data(void) {
        oled_clear();
        last_oled_state = user_config.is_oled_enabled;
    }
-
+    
+    if (user_config.is_oled_enabled != last_oled_state) {
+       if (user_config.is_oled_enabled) {
+           // TInfo is being turned ON: Use horizontal rotation for text
+           // Use OLED_ROTATION_0 or OLED_ROTATION_180 depending on mounting
+           oled_init(OLED_ROTATION_0); 
+       } else {
+           // TInfo is being turned OFF (Animation mode): Return to vertical
+           oled_init(OLED_ROTATION_270);
+       }
+       
+       oled_clear(); // Clear the buffer after re-initializing rotation
+       last_oled_state = user_config.is_oled_enabled;
+   }
+    
    if(user_config.is_oled_enabled){
        tv_ms(); // Reminder: Make sure there is no oled_clear() inside this function!
    }else{
@@ -897,11 +911,13 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         master_data();
     }else{
-
-        slave_data();
+        if (is_oled_on()) {
+            slave_data(); 
+        } else {
+            // Explicitly ensure it stays off if the master is off
+            oled_off();
     }
     return false;
-
 }
 
 #endif
