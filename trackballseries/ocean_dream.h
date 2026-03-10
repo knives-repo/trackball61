@@ -50,9 +50,9 @@
  * Wave Parameters
  */
 #define OCEAN_LINE 14        // Line you want to render the ocean starting at (best at oled_max_lines() - 2)
-#define WAVE_CALM 20         // render calm ocean under this WPM and ripple ocean at this WPM
-#define WAVE_HEAVY_STORM 40  // render medium ocean at this WPM
-#define WAVE_HURRICANE 60    // render heavy waves above this WPM
+#define WAVE_CALM 30         // render calm ocean under this WPM and ripple ocean at this WPM
+#define WAVE_HEAVY_STORM 70  // render medium ocean at this WPM
+#define WAVE_HURRICANE 90    // render heavy waves above this WPM
 // What number of frames you want to animate the ocean at.
 // Should be equal to or smaller than NUMBER_OF_FRAMES, e.g. 30, would animate on every other frame, 20, every third frame, etc
 // Don't set equal to 0.
@@ -86,9 +86,9 @@
  */
 #define ISLAND_LINE 12         // line that the island starts at. Island is 2 lines tall
 #define ISLAND_COLUMN 0        // column that the island starts at
-#define ISLAND_CALM 20         // WPM at which the palm tree calmly moves
-#define ISLAND_HEAVY_STORM 40  // WPM at which the heavy storm occurs
-#define ISLAND_HURRICANE 60    // WPM at which THE HURRICANE STARTS
+#define ISLAND_CALM 30         // WPM at which the palm tree calmly moves
+#define ISLAND_HEAVY_STORM 70  // WPM at which the heavy storm occurs
+#define ISLAND_HURRICANE 90    // WPM at which THE HURRICANE STARTS
 
 /*
  * DON'T TOUCH
