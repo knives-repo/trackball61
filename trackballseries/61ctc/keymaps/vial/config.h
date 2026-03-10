@@ -80,6 +80,7 @@
 #endif  // POINTING_DEVICE_ENABLE
 
 /* Ocean Dream Animation Components */
+#define OCEAN_DREAM_ENABLE
 #define ENABLE_WAVE
 #define ENABLE_ISLAND
 #define ENABLE_STARS
