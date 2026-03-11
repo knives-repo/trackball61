@@ -844,12 +844,16 @@ bool oled_task_user(void) {
     current_wpm   = get_current_wpm();
     led_usb_state = host_keyboard_led_state();
     
+    if (!user_config.is_oled_enabled) {
+        oled_off();     // turn the display hardware off
+        return false;   // stop the oled task completely
+    }
+
+    oled_on();
+
     if (is_keyboard_master()) {
         master_data();
     } else {
-        if (!is_oled_on()) {
-            return false;
-        }
         slave_data();
     }
 
