@@ -843,28 +843,16 @@ bool oled_task_user(void) {
 
     current_wpm   = get_current_wpm();
     led_usb_state = host_keyboard_led_state();
+    
     if (is_keyboard_master()) {
         master_data();
-    }
-    else {
-    static bool last_slave_on = false;
-        bool current_slave_on = is_oled_on();
-
-        if (current_slave_on != last_slave_on) {
-            if (current_slave_on) {
-                oled_init(OLED_ROTATION_270);
-            } else {
-                oled_clear();
-                oled_off();
-            }
-            last_slave_on = current_slave_on;
+    } else {
+        if (!is_oled_on()) {
+            return false;
         }
-
-        // ONLY render if we are sure the master wants us on
-        if (current_slave_on && last_slave_on) {
-            slave_data();
-        }
+        slave_data();
     }
+
     return false;
 }
 #endif
