@@ -670,8 +670,8 @@ uint8_t current_frame1 = 0;
 // int   current_wpm = 0; // commented out as it is already in ocean_dream.c
 led_t led_usb_state;
 
-bool isSneaking = true;
-bool isJumping  = true;
+bool isSneaking = false;
+bool isJumping  = false;
 bool showedJump = true;
 
 
@@ -829,7 +829,7 @@ static void slave_data(void) {
         default:
             oled_write("Undef", false);
     }
-    render_luna(0, 5);
+       render_luna(0, 5); 
 }
 
 static void tv_ms(void) {
