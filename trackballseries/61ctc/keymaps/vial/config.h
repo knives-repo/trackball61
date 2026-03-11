@@ -87,6 +87,6 @@
 #define ENABLE_SHOOTING_STARS
 #define ENABLE_MOON
 
-// OLED settings
-#define SPLIT_WPM_ENABLE
-#define SPLIT_OLED_ENABLE
+// split settings
+// #define SPLIT_WPM_ENABLE
+// #define SPLIT_OLED_ENABLE
