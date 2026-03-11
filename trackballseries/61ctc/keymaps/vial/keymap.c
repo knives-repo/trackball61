@@ -844,19 +844,27 @@ bool oled_task_user(void) {
     current_wpm   = get_current_wpm();
     led_usb_state = host_keyboard_led_state();
     
-    if (!user_config.is_oled_enabled) {
-        oled_off();     // turn the display hardware off
-        return false;   // stop the oled task completely
-    }
-
-    oled_on();
-
     if (is_keyboard_master()) {
         master_data();
-    } else {
-        slave_data();
     }
+    else {
+    static bool last_slave_on = false;
+        bool current_slave_on = is_oled_on();
 
+        if (current_slave_on != last_slave_on) {
+            if (!current_slave_on) {
+                oled_clear();
+                oled_off();
+                return false;
+            }
+            last_slave_on = current_slave_on;
+        }
+
+        // ONLY render if we are sure the master wants us on
+        if (current_slave_on && last_slave_on) {
+            slave_data();
+        }
+    }
     return false;
 }
 #endif
