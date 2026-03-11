@@ -897,14 +897,6 @@ static void master_data(void) {
         #endif
     }
 }
-        //oled_set_cursor(0, 0);
-        //render_cat();
-        //char string[10];
-            //uint16_t m = get_current_wpm();
-            //oled_write_P(PSTR("WPM:"), false);
-            //char wpm_str[6];
-            //snprintf(wpm_str, sizeof(wpm_str), "%d", m);
-            //oled_write(wpm_str, false);
 
 bool oled_task_user(void) {
 
@@ -913,31 +905,22 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         master_data();
     }
-    /*    
-    else{
-        if (is_oled_on()) {
-            slave_data(); 
-        } else {
-            // Explicitly ensure it stays off if the master is off
-            oled_off();
-    }
-    }
-    */
     else {
     static bool last_slave_on = false;
         bool current_slave_on = is_oled_on();
 
         if (current_slave_on != last_slave_on) {
-            if (!current_slave_on) {
-                oled_off(); // Force off only ONCE
+            if (current_slave_on) {
+                oled_init(OLED_ROTATION_270);
             } else {
-                oled_init(OLED_ROTATION_270); // Reset rotation only ONCE on wake
+                oled_clear();
+                oled_off();
             }
             last_slave_on = current_slave_on;
         }
 
         // ONLY render if we are sure the master wants us on
-        if (current_slave_on) {
+        if (current_slave_on && last_slave_on) {
             slave_data();
         }
     }
