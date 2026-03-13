@@ -91,13 +91,13 @@ void eeconfig_init_user(void){
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_SPACE):
-        case LGUI_T(KC_DELETE):
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
         case LALT_T(KC_BSPC):
         case LT(3, KC_ENTER):
             return 125;
+        case LGUI_T(KC_DELETE):
         case LT(8, KC_SCLN):
             return 150;
         default:
@@ -106,6 +106,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case LGUI_T(KC_DELETE):
+        case LALT_T(KC_BSPC):
         case RSFT_T(KC_EQUAL):
         case LT(8, KC_SCLN):
         case LT(2, KC_Z):
@@ -120,11 +122,9 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_SPACE):
-        case LGUI_T(KC_DELETE):
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
-        case LALT_T(KC_BSPC):
         case LT(3, KC_ENTER):
             // Immediately select the hold action when another key is pressed.
             return true;
