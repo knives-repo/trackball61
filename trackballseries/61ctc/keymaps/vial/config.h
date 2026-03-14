@@ -90,3 +90,5 @@
 // split settings
 // #define SPLIT_WPM_ENABLE
 #define SPLIT_OLED_ENABLE
+
+#define OLED_TIMEOUT 60000
