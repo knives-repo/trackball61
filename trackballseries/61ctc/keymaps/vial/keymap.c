@@ -680,29 +680,17 @@ static void slave_data(void) {
         case LAYER_WIN:
             oled_write(" WIN ", false);
             break;
+        case LAYER_MOUSE:
+            oled_write("TRACK", false);
+            break;
         case LAYER_SPECIAL:
-            oled_write(" EX  ", false);
+            oled_write(" :EX ", false);
             break;
-        case LAYER_3:
-            oled_write(" Fn  ", false);
-            break;
-        case LAYER_4:
-            oled_write("  4  ", false);
-            break;
-        case LAYER_5:
-            oled_write("  5  ", false);
-            break;
-        case LAYER_6:
-            oled_write("  6  ", false);
-            break;
-        case LAYER_7:
-            oled_write("  7  ", false);
+        case LAYER_FUNCTION:
+            oled_write(" :Fn ", false);
             break;
         case LAYER_POINTER:
             oled_write("SNIPE", false);
-            break;
-        case LAYER_MOUSE:
-            oled_write("TRACK", false);
             break;
         default:
             oled_write("Undef", false);
