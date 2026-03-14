@@ -86,10 +86,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
         case LALT_T(KC_BSPC):
-        case LT(3, KC_ENTER):
+        case LT(4, KC_ENTER):
             return 125;
         case LGUI_T(KC_DELETE):
-        case LT(8, KC_SCLN):
+        case LT(5, KC_SCLN):
             return 150;
         default:
             return TAPPING_TERM;
@@ -100,9 +100,9 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case LGUI_T(KC_DELETE):
         case LALT_T(KC_BSPC):
         case RSFT_T(KC_EQUAL):
-        case LT(8, KC_SCLN):
-        case LT(2, KC_Z):
-        case LT(2, KC_SLSH):
+        case LT(5, KC_SCLN):
+        case LT(3, KC_Z):
+        case LT(3, KC_SLSH):
             // Immediately select the hold action when another key is tapped.
             return true;
         default:
@@ -116,7 +116,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
-        case LT(3, KC_ENTER):
+        case LT(4, KC_ENTER):
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -132,8 +132,8 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
         case LALT_T(KC_BSPC):
-        case LT(3, KC_ENTER):
-        case LT(8, KC_SCLN):
+        case LT(4, KC_ENTER):
+        case LT(5, KC_SCLN):
             return true;
     }
     return false; // Disable otherwise.
@@ -142,17 +142,17 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_MAC] = LAYOUT(
-  // ╭──────────────────────────────────────────────────────╮               ╭──────────────────────────────────────────────────────╮
-MT(MOD_LCTL | MOD_LSFT | MOD_LALT | MOD_LGUI, KC_ESC),    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,
-  // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
+  // ╭──────────────────────────────────────────────────────╮                           ╭──────────────────────────────────────────────────────╮
+MT(MOD_LCTL | MOD_LSFT | MOD_LALT | MOD_LGUI, KC_ESC), KC_1, KC_2, KC_3,KC_4, KC_5, KC_6, KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+  // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
 MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC,
-  // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, LT(8, KC_SCLN), KC_QUOT,
-  // ├──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────┤
-       LSFT_T(KC_BSLS), LT(2, KC_Z), KC_X, KC_C, KC_V, KC_B, LCTL_T(KC_DELETE), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, KC_DOT, LT(2, KC_SLSH), RSFT_T(KC_EQUAL),
-  // ╰──────────────────────────────────────────────────────┤               ├──────────────────────────────────────────────────────╯
-       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_GRV, LALT_T(KC_BSPC), LT(3, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(3, KC_ENTER), KC_LBRC, KC_RBRC
-  //                            ╰───────────────────────────╯               ╰──────────────────╯
+  // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
+       KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, LT(5, KC_SCLN), KC_QUOT,
+  // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
+       LSFT_T(KC_BSLS), LT(3, KC_Z), KC_X, KC_C, KC_V, KC_B, LCTL_T(KC_DELETE), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, KC_DOT, LT(3, KC_SLSH), RSFT_T(KC_EQUAL),
+  // ╰──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────╯
+       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_GRV, LALT_T(KC_BSPC), LT(4, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(4, KC_ENTER), KC_LBRC, KC_RBRC
+  //                            ╰───────────────────────────╯                           ╰──────────────────╯
   ),
 [LAYER_WIN] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
@@ -164,10 +164,22 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), RGUI_T(KC_DELETE), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       MO(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(3, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(3, KC_ENTER), KC_TRNS, KC_TRNS                              
+       MO(2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(4, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(4, KC_ENTER), KC_TRNS, KC_TRNS                              
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
-
+  [LAYER_MOUSE] = LAYOUT(
+  // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, MS_BTN1, MS_BTN2, DRGSCRL, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_TRNS,                    KC_TRNS, KC_TRNS                 
+  //                            ╰───────────────────────────╯               ╰──────────────────╯
+),
   [LAYER_SPECIAL] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
        KC_TRNS, KC_TRNS, KC_TRNS, QM_PND, QM_EURO, QM_SLCR,                      KC_TRNS, QM_PLCR, QM_BULL, KC_TRNS, KC_TRNS, QM_EMD,
@@ -180,8 +192,7 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DOT, KC_TRNS, KC_0,             KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS
   //                            ╰───────────────────────────╯               ╰──────────────────╯
-  ),
-
+),
   [LAYER_FUNCTION] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
        KC_F12, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,                                 KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
@@ -206,19 +217,6 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     T_SAVE, AUTO_MODE_TOGGLE, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
        QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              TG(1), QK_BOOT                 
-  //                            ╰───────────────────────────╯               ╰──────────────────╯
-),
-  [LAYER_MOUSE] = LAYOUT(
-  // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, MS_BTN1, MS_BTN2, DRGSCRL, KC_TRNS, KC_TRNS,
-  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-  // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_TRNS,                    KC_TRNS, KC_TRNS                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 };
