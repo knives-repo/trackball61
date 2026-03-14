@@ -675,7 +675,7 @@ static void slave_data(void) {
 
     switch (get_highest_layer(layer_state)) {
         case LAYER_MAC:
-            oled_write(" MAC ", false);
+            oled_write("", false);
             break;
         case LAYER_WIN:
             oled_write(" WIN ", false);
