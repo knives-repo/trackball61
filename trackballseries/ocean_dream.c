@@ -546,6 +546,7 @@ void render_stars(void) {
     }
 
     // this fixes the screen on and off bug
+/*
     if (current_wpm > 0) {
         oled_on();
         starry_night_anim_sleep = timer_read32();
@@ -553,3 +554,4 @@ void render_stars(void) {
         oled_off();
     }
 }
+*/
