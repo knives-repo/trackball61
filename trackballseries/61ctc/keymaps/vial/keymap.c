@@ -529,7 +529,7 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
 
 /* advanced settings */
 #    define ANIM_FRAME_DURATION 200  // how long each frame lasts in ms
-#    define ANIM_SIZE1          1024   // number of bytes in array. If you change sprites, minimize for adequate firmware size. max is 1024
+#    define ANIM_SIZE1          512   // number of bytes in array. If you change sprites, minimize for adequate firmware size. max is 1024
 
 /* timers */
 uint32_t anim_timer1 = 0;
