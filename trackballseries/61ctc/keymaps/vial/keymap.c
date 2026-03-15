@@ -832,7 +832,7 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 
 //从设备
 static void slave_data(void) {
-	render_luna(0, 20); 
+	render_luna(0, 8); 
 	
     oled_set_cursor(0, 11);
     oled_write("", false);
