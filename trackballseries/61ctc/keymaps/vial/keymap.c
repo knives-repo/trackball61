@@ -390,6 +390,39 @@ uint8_t current_frame1 = 0;
 int   current_wpm = 0; // commented out in the other keymap.c as it is already in ocean_dream.c
 led_t led_usb_state;
 
+/* drift */
+// shifted render function
+static void oled_write_raw_shift_P(const uint8_t *data, uint16_t size, int8_t x_shift) {
+    static uint8_t buffer[ANIM_SIZE1];
+
+    for (uint16_t i = 0; i < size; i++) {
+        uint8_t byte = pgm_read_byte(&data[i]);
+
+        if (x_shift > 0) {
+            buffer[i] = byte << x_shift;
+        } else if (x_shift < 0) {
+            buffer[i] = byte >> (-x_shift);
+        } else {
+            buffer[i] = byte;
+        }
+    }
+
+    oled_write_raw(buffer, size);
+}
+// slow drift timer
+static int8_t kodama_pixel_drift = 0;
+static uint32_t drift_timer = 0;
+
+static void update_kodama_drift(void) {
+    if (timer_elapsed32(drift_timer) > 5000) {  // every 5s
+        drift_timer = timer_read32();
+        kodama_pixel_drift = (rand() % 3) - 1;  // -1,0,+1
+    }
+}
+
+
+
+
 bool isSneaking = false;
 bool isJumping  = false;
 bool showedJump = true;
@@ -631,34 +664,35 @@ static const char PROGMEM wind[1][ANIM_SIZE] = {
 
 /* animation */
 void animate_luna(void) {
+	update_kodama_drift();
     if (current_wpm <= MIN_WALK_SPEED) {
         // Sequence: 10 (sit 2) + 1 (sit[0]) + 40 (still) + 1 (wind) + 10 (sit 1) = 62
         current_frame1 = (current_frame1 + 1) % 62;
 
         if (current_frame1 < 10) {
             // Frames 0–9: Sit (second time)
-            oled_write_raw_P(sit[current_frame1], ANIM_SIZE);
+			oled_write_raw_shift_P(sit[current_frame1], ANIM_SIZE, kodama_pixel_drift);
         }
         else if (current_frame1 == 10) {
             // Frame 10: sit[0]
-            oled_write_raw_P(sit[0], ANIM_SIZE);
+			oled_write_raw_shift_P(sit[0], ANIM_SIZE, kodama_pixel_drift);
         }
         else if (current_frame1 < 51) {
             // Frames 11–50: still (40 frames)
-            oled_write_raw_P(still[0], ANIM_SIZE);
+			oled_write_raw_shift_P(still[0], ANIM_SIZE, kodama_pixel_drift);
         }
         else if (current_frame1 == 51) {
             // Frame 51: wind
-            oled_write_raw_P(wind[0], ANIM_SIZE);
+			oled_write_raw_shift_P(wind[0], ANIM_SIZE, kodama_pixel_drift);
         }
         else {
             // Frames 52–61: Sit (first time)
-            oled_write_raw_P(sit[current_frame1 - 52], ANIM_SIZE);
+			oled_write_raw_shift_P(sit[current_frame1 - 52], ANIM_SIZE, kodama_pixel_drift);
         }
     }
     else {
         current_frame1 = (current_frame1 + 1) % 4;
-        oled_write_raw_P(walk[current_frame1], ANIM_SIZE);
+		oled_write_raw_shift_P(walk[current_frame1], ANIM_SIZE, kodama_pixel_drift);
     }
 }
 
