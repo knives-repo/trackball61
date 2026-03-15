@@ -784,13 +784,21 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
     /* animation */
     void animate_luna(void) {
 		if (current_wpm <= MIN_WALK_SPEED) {
-            current_frame1 = (current_frame1 + 1) % 11; // 2 frames for sit
+            current_frame1 = (current_frame1 + 1) % 20; // 20 frames for sit
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
+			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
             oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
 			oled_write_raw_P(wind[current_frame1], ANIM_SIZE1);
 			oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
 
         } else /* if (current_wpm <= MIN_RUN_SPEED) */ {
-            current_frame1 = (current_frame1 + 1) % 4; // 6 frames for walk
+            current_frame1 = (current_frame1 + 1) % 4; // 4 frames for walk
             oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
         }
     }
