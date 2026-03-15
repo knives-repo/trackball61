@@ -524,7 +524,7 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
 }
 
 /* settings */
-#    define MIN_WALK_SPEED      30
+#    define MIN_WALK_SPEED      25
 #    define MIN_RUN_SPEED       40
 
 /* advanced settings */
@@ -783,41 +783,31 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 
 /* animation */
     void animate_luna(void) {
-        if (current_wpm <= MIN_WALK_SPEED) {
-            // Total sequence: 10 (still) + 1 (wind) + 10 (sit 1) + 10 (sit 2) = 32 frames
-            current_frame1 = (current_frame1 + 1) % 32; 
-
-            if (current_frame1 < 10) {
-                // Frames 0-9: Play "still" 
-                oled_write_raw_P(still[0], ANIM_SIZE1);
-            } 
-            else if (current_frame1 == 10) {
-                // Frame 10: Play "wind" 
-                oled_write_raw_P(wind[0], ANIM_SIZE1);
-            } 
-            else if (current_frame1 < 21) {
-                // Frames 11-20: Play "sit" (First time)
-                // 11-11 = 0, 20-11 = 9
-                oled_write_raw_P(sit[current_frame1 - 11], ANIM_SIZE1);
-            }
-            else if (current_frame1 < 31) {
-                // Frames 21-30: Play "sit" (Second time)
-                // 21-21 = 0, 30-21 = 9
-                oled_write_raw_P(sit[current_frame1 - 21], ANIM_SIZE1);
-            }
-			else {
-                oled_write_raw_P(sit[0], ANIM_SIZE1);
-            }
-        }
-    	else if (current_wpm <= MIN_RUN_SPEED) {
-        	current_frame1 = (current_frame1 + 1) % 5; 
-			if (current_frame1 < 5) {
-        		oled_write_raw_P(sit[current_frame1 + 6], ANIM_SIZE1);
-			}
-			else {
-        		oled_write_raw_P(sit[0], ANIM_SIZE1);
-			}
-    	}
+		if (current_wpm <= MIN_WALK_SPEED) {
+		    // Sequence: 10 (sit 2) + 1 (sit[0]) + 10 (still) + 1 (wind) + 10 (sit 1) = 32
+		    current_frame1 = (current_frame1 + 1) % 32;
+		
+		    if (current_frame1 < 10) {
+		        // Frames 0–9: Sit (second time)
+		        oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
+		    }
+		    else if (current_frame1 == 10) {
+		        // Frame 10: sit[0]
+		        oled_write_raw_P(sit[0], ANIM_SIZE1);
+		    }
+		    else if (current_frame1 < 21) {
+		        // Frames 11–20: still
+		        oled_write_raw_P(still[0], ANIM_SIZE1);
+		    }
+		    else if (current_frame1 == 21) {
+		        // Frame 21: wind
+		        oled_write_raw_P(wind[0], ANIM_SIZE1);
+		    }
+		    else {
+		        // Frames 22–31: Sit (first time)
+		        oled_write_raw_P(sit[current_frame1 - 22], ANIM_SIZE1);
+		    }
+		}
         else {
             current_frame1 = (current_frame1 + 1) % 4;
             oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
@@ -835,7 +825,7 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 
 //从设备
 static void slave_data(void) {
-	oled_set_cursor(0, 7);
+	oled_set_cursor(0, 5);
 	render_luna(0, 0); 
 	
     oled_set_cursor(0, 11);
