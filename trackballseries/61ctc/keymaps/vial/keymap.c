@@ -724,7 +724,7 @@ static void tv_ms(void) {
         if (last_input_activity_elapsed() > OLED_TIMEOUT) {
             oled_clear();
             oled_off();
-            return false;
+            return;
     } else {
         oled_on();
     }
