@@ -784,8 +784,8 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 /* animation */
     void animate_luna(void) {
         if (current_wpm <= MIN_WALK_SPEED) {
-            // Total sequence: 10 (still) + 1 (wind) + 10 (sit 1) + 10 (sit 2) = 31 frames
-            current_frame1 = (current_frame1 + 1) % 31; 
+            // Total sequence: 10 (still) + 1 (wind) + 10 (sit 1) + 10 (sit 2) = 32 frames
+            current_frame1 = (current_frame1 + 1) % 32; 
 
             if (current_frame1 < 10) {
                 // Frames 0-9: Play "still" 
@@ -800,10 +800,13 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
                 // 11-11 = 0, 20-11 = 9
                 oled_write_raw_P(sit[current_frame1 - 11], ANIM_SIZE1);
             }
-            else {
+            else if (current_frame1 < 31) {
                 // Frames 21-30: Play "sit" (Second time)
                 // 21-21 = 0, 30-21 = 9
                 oled_write_raw_P(sit[current_frame1 - 21], ANIM_SIZE1);
+            }
+			else {
+                oled_write_raw_P(sit[0], ANIM_SIZE1);
             }
         }
         else {
