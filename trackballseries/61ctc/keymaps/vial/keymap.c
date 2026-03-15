@@ -983,7 +983,7 @@ static void slave_data(void) {
 //    render_space();
 
     /* Print current layer */
-    oled_set_cursor(0, 9);
+    oled_set_cursor(0, 0);
     oled_write("", false);
 
     switch (get_highest_layer(layer_state)) {
