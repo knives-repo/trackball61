@@ -824,9 +824,9 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 
 //从设备
 static void slave_data(void) {
-	render_luna(0, 5); 
+	render_luna(0, 10); 
 	
-    oled_set_cursor(0, 9);
+    oled_set_cursor(0, 11);
     oled_write("", false);
 
     switch (get_highest_layer(layer_state)) {
