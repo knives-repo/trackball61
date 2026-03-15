@@ -850,18 +850,8 @@ static void render_luna(int LUNA_X, int LUNA_Y) {
 
 //从设备
 static void slave_data(void) {
-    /* Print current mode */
-//    oled_set_cursor(0, 0);
-//    render_logo();
-//    oled_set_cursor(0, 4);
-
-//    render_mod_status_gui_alt(get_mods());
-//    render_mod_status_ctrl_shift(get_mods());
-
-//    oled_set_cursor(0, 8);
-//    render_space();
-
-    /* Print current layer */
+	render_luna(0, 0); 
+	
     oled_set_cursor(0, 0);
     oled_write("", false);
 
@@ -887,7 +877,7 @@ static void slave_data(void) {
         default:
             oled_write("Undef", false);
     }
-       render_luna(0, 0); 
+       
 }
 
 static void tv_ms(void) {
