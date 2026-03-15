@@ -809,14 +809,12 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
                 oled_write_raw_P(sit[0], ANIM_SIZE1);
             }
         }
-        else if (current_wpm <= MIN_RUN_SPEED) {
-			if (current_frame1 < 11) {
-                oled_write_raw_P(sit[current_frame1 - 11], ANIM_SIZE1);
-            } 
-        }
+    	else if (current_wpm <= MIN_RUN_SPEED) {
+        	current_frame1 = (current_frame1 + 1) % 4; 
+        	oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
+    	}
         else {
-            // WPM > MIN_WALK_SPEED: Walking state
-            current_frame1 = (current_frame1 + 1) % 4; // Assuming 4 frames for walk
+            current_frame1 = (current_frame1 + 1) % 4;
             oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
         }
     }
