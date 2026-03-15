@@ -406,9 +406,6 @@ static void oled_write_raw_shift_P(const char *data, uint16_t size, int8_t x_shi
     }
     oled_write_raw(buffer, size);
 }
-
-    oled_write_raw(buffer, size);
-}
 // slow drift timer
 static int8_t kodama_pixel_drift = 0;
 static uint32_t drift_timer = 0;
