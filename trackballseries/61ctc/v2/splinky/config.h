@@ -60,7 +60,7 @@
 /* 使用 QMK 提供的分割传输时，确保当前 WPM 在从属设备上可用 */
 #define SPLIT_WPM_ENABLE
 #define OLED_FONT_H "keyboards/trackballseries/61ctc/keymaps/vial/glcdfont.c"
-#define OLED_TIMEOUT 300000
+#define OLED_TIMEOUT 60000
 #endif
 
 //解决从机休眠后无法唤醒问题
