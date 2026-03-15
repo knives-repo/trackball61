@@ -357,7 +357,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #define TAP_SPEED 40
 #define ANIM_FRAME_DURATION 16 // how long each frame lasts in ms
 #define ANIM_SIZE 192 // number of bytes in array
-#define MIN_WALK_SPEED 60
+#define MIN_WALK_SPEED 40
 #define MIN_RUN_SPEED 80
 
 uint32_t anim_timer         = 0;
