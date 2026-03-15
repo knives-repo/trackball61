@@ -352,12 +352,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 /* oled stuff :) */
 #ifdef OLED_ENABLE
 #define IDLE_FRAMES 5
-#define IDLE_SPEED 20 // 低于此wpm值，动画将空闲
+#define IDLE_SPEED 20
 #define TAP_FRAMES 2
-#define TAP_SPEED 40 // 以上的wpm值输入动画触发
-#define ANIM_FRAME_DURATION 200 // 每帧持续的时间(毫秒
-#define ANIM_SIZE 636 // number of bytes in array
-
+#define TAP_SPEED 40
+#define ANIM_FRAME_DURATION 16 // how long each frame lasts in ms
+#define ANIM_SIZE 192 // number of bytes in array
+#define MIN_WALK_SPEED 25
+#define MIN_RUN_SPEED 40
 
 uint32_t anim_timer         = 0;
 uint32_t anim_sleep         = 0;
@@ -375,161 +376,9 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
             return OLED_ROTATION_270;  // Ocean Dream Mode
         }
     } else {
-        return OLED_ROTATION_270;
+        return OLED_ROTATION_270; // Kodama Animation
         }
 }
-
-
-void render_space(void) {
-    oled_write_P(PSTR("     "), false);
-}
-
-
-void render_logo(void) {
-        oled_write_P(PSTR("knives"), false);
-        oled_write_P(PSTR("-repo "), false);
-        oled_write_P(PSTR("board"), false);
-
-}
-
-void render_mod_status_gui_alt(uint8_t modifiers) {
-    static const char PROGMEM gui_off_1[] = {0x85, 0x86, 0};
-    static const char PROGMEM gui_off_2[] = {0xa5, 0xa6, 0};
-    static const char PROGMEM gui_on_1[] = {0x8d, 0x8e, 0};
-    static const char PROGMEM gui_on_2[] = {0xad, 0xae, 0};
-
-    static const char PROGMEM alt_off_1[] = {0x87, 0x88, 0};
-    static const char PROGMEM alt_off_2[] = {0xa7, 0xa8, 0};
-    static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};
-    static const char PROGMEM alt_on_2[] = {0xaf, 0xb0, 0};
-
-    // fillers between the modifier icons bleed into the icon frames
-    static const char PROGMEM off_off_1[] = {0xc5, 0};
-    static const char PROGMEM off_off_2[] = {0xc6, 0};
-    static const char PROGMEM on_off_1[] = {0xc7, 0};
-    static const char PROGMEM on_off_2[] = {0xc8, 0};
-    static const char PROGMEM off_on_1[] = {0xc9, 0};
-    static const char PROGMEM off_on_2[] = {0xca, 0};
-    static const char PROGMEM on_on_1[] = {0xcb, 0};
-    static const char PROGMEM on_on_2[] = {0xcc, 0};
-
-    if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(gui_on_1, false);
-    } else {
-        oled_write_P(gui_off_1, false);
-    }
-
-    if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
-        oled_write_P(on_on_1, false);
-    } else if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(on_off_1, false);
-    } else if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(off_on_1, false);
-    } else {
-        oled_write_P(off_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(alt_on_1, false);
-    } else {
-        oled_write_P(alt_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(gui_on_2, false);
-    } else {
-        oled_write_P(gui_off_2, false);
-    }
-
-    if (modifiers & MOD_MASK_GUI & MOD_MASK_ALT) {
-        oled_write_P(on_on_2, false);
-    } else if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(on_off_2, false);
-    } else if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(off_on_2, false);
-    } else {
-        oled_write_P(off_off_2, false);
-    }
-
-    if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(alt_on_2, false);
-    } else {
-        oled_write_P(alt_off_2, false);
-    }
-}
-void render_mod_status_ctrl_shift(uint8_t modifiers) {
-    static const char PROGMEM ctrl_off_1[] = {0x89, 0x8a, 0};
-    static const char PROGMEM ctrl_off_2[] = {0xa9, 0xaa, 0};
-    static const char PROGMEM ctrl_on_1[] = {0x91, 0x92, 0};
-    static const char PROGMEM ctrl_on_2[] = {0xb1, 0xb2, 0};
-
-    static const char PROGMEM shift_off_1[] = {0x8b, 0x8c, 0};
-    static const char PROGMEM shift_off_2[] = {0xab, 0xac, 0};
-    static const char PROGMEM shift_on_1[] = {0xcd, 0xce, 0};
-    static const char PROGMEM shift_on_2[] = {0xcf, 0xd0, 0};
-
-    // fillers between the modifier icons bleed into the icon frames
-    static const char PROGMEM off_off_1[] = {0xc5, 0};
-    static const char PROGMEM off_off_2[] = {0xc6, 0};
-    static const char PROGMEM on_off_1[] = {0xc7, 0};
-    static const char PROGMEM on_off_2[] = {0xc8, 0};
-    static const char PROGMEM off_on_1[] = {0xc9, 0};
-    static const char PROGMEM off_on_2[] = {0xca, 0};
-    static const char PROGMEM on_on_1[] = {0xcb, 0};
-    static const char PROGMEM on_on_2[] = {0xcc, 0};
-
-    if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(ctrl_on_1, false);
-    } else {
-        oled_write_P(ctrl_off_1, false);
-    }
-
-    if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
-        oled_write_P(on_on_1, false);
-    } else if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(on_off_1, false);
-    } else if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(off_on_1, false);
-    } else {
-        oled_write_P(off_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(shift_on_1, false);
-    } else {
-        oled_write_P(shift_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(ctrl_on_2, false);
-    } else {
-        oled_write_P(ctrl_off_2, false);
-    }
-
-    if (modifiers & MOD_MASK_CTRL & MOD_MASK_SHIFT) {
-        oled_write_P(on_on_2, false);
-    } else if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(on_off_2, false);
-    } else if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(off_on_2, false);
-    } else {
-        oled_write_P(off_off_2, false);
-    }
-
-    if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(shift_on_2, false);
-    } else {
-        oled_write_P(shift_off_2, false);
-    }
-}
-
-/* settings */
-#    define MIN_WALK_SPEED      25
-#    define MIN_RUN_SPEED       40
-
-/* advanced settings */
-#    define ANIM_FRAME_DURATION 16  // how long each frame lasts in ms
-#    define ANIM_SIZE1          192   // number of bytes in array. If you change sprites, minimize for adequate firmware size. max is 1024
 
 /* timers */
 uint32_t anim_timer1 = 0;
@@ -538,15 +387,14 @@ uint32_t anim_timer1 = 0;
 uint8_t current_frame1 = 0;
 
 /* status variables */
-int   current_wpm = 0; // commented out as it is already in ocean_dream.c
+int   current_wpm = 0; // commented out in the other keymap.c as it is already in ocean_dream.c
 led_t led_usb_state;
 
 bool isSneaking = false;
 bool isJumping  = false;
 bool showedJump = true;
 
-
-static void render_luna(int LUNA_X, int LUNA_Y) {
+static void render_kodama(int LUNA_X, int LUNA_Y) {
     static const char PROGMEM still[1][ANIM_SIZE1] = {
 {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xe0, 0x30, 0x18, 0xec, 0xb4, 0xf4, 0x66, 0x02, 
@@ -821,18 +669,29 @@ void animate_luna(void) {
     }
 }
 
+static int8_t kodama_x_offset = 0;
+static uint32_t kodama_timer = 0;
 
-//从设备
+static void update_kodama_offset(void) {
+    if (timer_elapsed32(kodama_timer) > 4000) {  // change every 4s
+        kodama_timer = timer_read32();
+
+        kodama_x_offset = (rand() % 3) - 1;
+    }
+}
+
+// slave_data setup
 static void slave_data(void) {
-	oled_set_cursor(0, 5);
-	render_luna(0, 0); 
+	update_kodama_offset();
+	oled_set_cursor(0 + kodama_x_offset, 5); // this randomly offsets render_kodama left and right a few pixels to prevent burn-in
+	render_kodama(0, 0); 
 	
-    oled_set_cursor(0, 11);
+    oled_set_cursor(0 + kodama_x_offset, 11);
     oled_write("", false);
 
     switch (get_highest_layer(layer_state)) {
         case LAYER_MAC:
-            oled_write("     ", false);
+            oled_write(" MAC ", false);
             break;
         case LAYER_WIN:
             oled_write(" WIN ", false);
