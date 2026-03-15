@@ -776,7 +776,6 @@ bool oled_task_user(void) {
     else {
             slave_data();
         }
-    }
     return false;
 }
 #endif
