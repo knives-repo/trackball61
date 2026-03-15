@@ -644,7 +644,7 @@ static void render_luna(int LUNA_X, int LUNA_Y) {
             oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
 
         } else {
-            oled_write_raw_P(run[current_frame1], ANIM_SIZE1);
+            oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
         }
     }
 
