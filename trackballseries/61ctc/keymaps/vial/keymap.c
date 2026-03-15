@@ -392,12 +392,10 @@ led_t led_usb_state;
 
 /* drift */
 // shifted render function
-static void oled_write_raw_shift_P(const uint8_t *data, uint16_t size, int8_t x_shift) {
-    static uint8_t buffer[ANIM_SIZE];
-
+static void oled_write_raw_shift_P(const char *data, uint16_t size, int8_t x_shift) {
+    static char buffer[ANIM_SIZE];
     for (uint16_t i = 0; i < size; i++) {
-        uint8_t byte = pgm_read_byte(&data[i]);
-
+        char byte = pgm_read_byte(&data[i]);
         if (x_shift > 0) {
             buffer[i] = byte << x_shift;
         } else if (x_shift < 0) {
@@ -406,6 +404,8 @@ static void oled_write_raw_shift_P(const uint8_t *data, uint16_t size, int8_t x_
             buffer[i] = byte;
         }
     }
+    oled_write_raw(buffer, size);
+}
 
     oled_write_raw(buffer, size);
 }
