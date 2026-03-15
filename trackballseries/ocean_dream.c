@@ -546,12 +546,13 @@ void render_stars(void) {
     }
 
     // this fixes the screen on and off bug
-/*
+/* getting rid of the ocean_dream timer since my keymap.c already has something for oled_timeout
     if (current_wpm > 0) {
         oled_on();
         starry_night_anim_sleep = timer_read32();
     } else if (timer_elapsed32(starry_night_anim_sleep) > OLED_TIMEOUT) {
         oled_off();
     }
-}
 */
+}
+
