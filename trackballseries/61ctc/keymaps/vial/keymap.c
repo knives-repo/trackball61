@@ -833,7 +833,7 @@ static void render_luna(int LUNA_X, int LUNA_Y) {
             current_frame1 = (current_frame1 + 1) % 2; // 2 frames for sit
             oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
 
-        } else if (current_wpm <= MIN_RUN_SPEED) {
+        } else /* if (current_wpm <= MIN_RUN_SPEED) */ {
             current_frame1 = (current_frame1 + 1) % 6; // 6 frames for walk
             oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
         }
