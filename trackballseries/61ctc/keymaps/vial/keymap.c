@@ -414,7 +414,7 @@ static int8_t kodama_pixel_drift = 0;
 static uint32_t drift_timer = 0;
 
 static void update_kodama_drift(void) {
-    if (timer_elapsed32(drift_timer) > 5000) {  // every 5s
+    if (timer_elapsed32(drift_timer) > 60000) {  // every 60s
         drift_timer = timer_read32();
         kodama_pixel_drift = (rand() % 3) - 1;  // -1,0,+1
     }
@@ -806,11 +806,3 @@ bool oled_task_user(void) {
     return false;
 }
 #endif
-
-
-
-
-
-
-
-
