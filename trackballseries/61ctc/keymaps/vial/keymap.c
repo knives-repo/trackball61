@@ -1066,10 +1066,6 @@ static void master_data(void) {
     // Render current mode
     if (user_config.is_oled_enabled) {
         tv_ms();   // ensure this function does NOT call oled_clear()
-    } else {
-        #ifdef OCEAN_DREAM_ENABLE
-            render_stars();
-        #endif
     }
 }
 
