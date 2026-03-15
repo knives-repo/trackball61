@@ -524,8 +524,8 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
 }
 
 /* settings */
-#    define MIN_WALK_SPEED      25
-#    define MIN_RUN_SPEED       27
+#    define MIN_WALK_SPEED      30
+#    define MIN_RUN_SPEED       40
 
 /* advanced settings */
 #    define ANIM_FRAME_DURATION 16  // how long each frame lasts in ms
@@ -810,9 +810,9 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
             }
         }
         else if (current_wpm <= MIN_RUN_SPEED) {
-            // WPM > MIN_WALK_SPEED: Walking state
-            current_frame1 = (current_frame1 + 1) % 2; // Assuming 4 frames for walk
-            oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
+			if (current_frame1 < 11) {
+                oled_write_raw_P(sit[current_frame1 - 11], ANIM_SIZE1);
+            } 
         }
         else {
             // WPM > MIN_WALK_SPEED: Walking state
@@ -832,7 +832,8 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 
 //从设备
 static void slave_data(void) {
-	render_luna(0, 8); 
+	oled_set_cursor(0, 7);
+	render_luna(0, 0); 
 	
     oled_set_cursor(0, 11);
     oled_write("", false);
