@@ -538,7 +538,7 @@ uint32_t anim_timer1 = 0;
 uint8_t current_frame1 = 0;
 
 /* status variables */
-// int   current_wpm = 0; // commented out as it is already in ocean_dream.c
+int   current_wpm = 0; // commented out as it is already in ocean_dream.c
 led_t led_usb_state;
 
 bool isSneaking = false;
@@ -1071,7 +1071,7 @@ static void master_data(void) {
 
 bool oled_task_user(void) {
 
-    // current_wpm   = get_current_wpm();
+    current_wpm   = get_current_wpm();
     led_usb_state = host_keyboard_led_state();
     
     if (is_keyboard_master()) {
