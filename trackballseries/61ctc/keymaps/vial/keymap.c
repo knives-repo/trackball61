@@ -705,7 +705,7 @@ void animate_luna(void) {
 
 // slave_data setup
 static void slave_data(void) {
-	oled_set_cursor(0 +, 5);
+	oled_set_cursor(0, 5);
 	render_kodama(0, 0);
 	
     oled_set_cursor(0, 11);
