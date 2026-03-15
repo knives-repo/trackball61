@@ -782,38 +782,37 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 
 
 /* animation */
-    void animate_luna(void) {
-		if (current_wpm <= MIN_WALK_SPEED) {
-		    // Sequence: 10 (sit 2) + 1 (sit[0]) + 10 (still) + 1 (wind) + 10 (sit 1) = 32
-		    current_frame1 = (current_frame1 + 1) % 32;
-		
-		    if (current_frame1 < 10) {
-		        // Frames 0–9: Sit (second time)
-		        oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
-		    }
-		    else if (current_frame1 == 10) {
-		        // Frame 10: sit[0]
-		        oled_write_raw_P(sit[0], ANIM_SIZE1);
-		    }
-		    else if (current_frame1 < 21) {
-		        // Frames 11–20: still
-		        oled_write_raw_P(still[0], ANIM_SIZE1);
-		    }
-		    else if (current_frame1 == 21) {
-		        // Frame 21: wind
-		        oled_write_raw_P(wind[0], ANIM_SIZE1);
-		    }
-		    else {
-		        // Frames 22–31: Sit (first time)
-		        oled_write_raw_P(sit[current_frame1 - 22], ANIM_SIZE1);
-		    }
-		}
+void animate_luna(void) {
+    if (current_wpm <= MIN_WALK_SPEED) {
+        // Sequence: 10 (sit 2) + 1 (sit[0]) + 40 (still) + 1 (wind) + 10 (sit 1) = 62
+        current_frame1 = (current_frame1 + 1) % 62;
+
+        if (current_frame1 < 10) {
+            // Frames 0–9: Sit (second time)
+            oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
+        }
+        else if (current_frame1 == 10) {
+            // Frame 10: sit[0]
+            oled_write_raw_P(sit[0], ANIM_SIZE1);
+        }
+        else if (current_frame1 < 51) {
+            // Frames 11–50: still (40 frames)
+            oled_write_raw_P(still[0], ANIM_SIZE1);
+        }
+        else if (current_frame1 == 51) {
+            // Frame 51: wind
+            oled_write_raw_P(wind[0], ANIM_SIZE1);
+        }
         else {
-            current_frame1 = (current_frame1 + 1) % 4;
-            oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
+            // Frames 52–61: Sit (first time)
+            oled_write_raw_P(sit[current_frame1 - 52], ANIM_SIZE1);
         }
     }
-
+    else {
+        current_frame1 = (current_frame1 + 1) % 4;
+        oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
+    }
+}
 
     /* animation timer */
     if (timer_elapsed32(anim_timer1) > ANIM_FRAME_DURATION) {
