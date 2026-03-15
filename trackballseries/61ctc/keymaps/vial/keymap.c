@@ -719,20 +719,16 @@ static void tv_ms(void) {
 
     //   滚动/阻击模式OLED
     trackball_oled_info();
-//
-//        #if OLED_TIMEOUT > 0
-//    /* the animation prevents the normal timeout from occuring
-//    last_input_activity_elapsed返回自上次输入活动（按键和编码器使用）以来的时间
-//    自上次LED活动以来的毫秒数
-//    */
-//    if (last_input_activity_elapsed() > OLED_TIMEOUT) {
-////        oled_clear();
-//        oled_off();
-//        return;
-//    } else {
-//        oled_on();
-//    }
-//    #endif
+
+    #if OLED_TIMEOUT > 0
+        if (last_input_activity_elapsed() > OLED_TIMEOUT) {
+            oled_clear();
+            oled_off();
+            return false;
+    } else {
+        oled_on();
+    }
+    #endif
     }
 
 //主设备OLED
