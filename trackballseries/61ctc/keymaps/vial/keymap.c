@@ -524,8 +524,8 @@ void render_mod_status_ctrl_shift(uint8_t modifiers) {
 }
 
 /* settings */
-#    define MIN_WALK_SPEED      10
-#    define MIN_RUN_SPEED       40
+#    define MIN_WALK_SPEED      25
+#    define MIN_RUN_SPEED       27
 
 /* advanced settings */
 #    define ANIM_FRAME_DURATION 16  // how long each frame lasts in ms
@@ -808,6 +808,11 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 			else {
                 oled_write_raw_P(sit[0], ANIM_SIZE1);
             }
+        }
+        else if (current_wpm <= MIN_RUN_SPEED) {
+            // WPM > MIN_WALK_SPEED: Walking state
+            current_frame1 = (current_frame1 + 1) % 2; // Assuming 4 frames for walk
+            oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
         }
         else {
             // WPM > MIN_WALK_SPEED: Walking state
