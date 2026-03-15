@@ -669,26 +669,12 @@ void animate_luna(void) {
     }
 }
 
-static int8_t kodama_x_offset = 0;
-static int8_t kodama_y_offset = 0;
-static uint32_t kodama_timer = 0;
-
-static void update_kodama_offset(void) {
-    if (timer_elapsed32(kodama_timer) > 15000) {  // change every 15s
-        kodama_timer = timer_read32();
-
-        kodama_x_offset = (rand() % 3) - 1;
-		kodama_y_offset = (rand() % 3) - 1;
-    }
-}
-
 // slave_data setup
 static void slave_data(void) {
-	update_kodama_offset();
-	oled_set_cursor(0 + kodama_x_offset, 5 + kodama_y_offset); // this randomly offsets render_kodama position to prevent burn-in
+	oled_set_cursor(0 +, 5);
 	render_kodama(0, 0);
 	
-    oled_set_cursor(0 + kodama_x_offset, 11 + kodama_y_offset);
+    oled_set_cursor(0, 11);
     oled_write("", false);
 
     switch (get_highest_layer(layer_state)) {
