@@ -394,14 +394,16 @@ led_t led_usb_state;
 // shifted render function
 static void oled_write_raw_shift_P(const char *data, uint16_t size, int8_t x_shift) {
     static char buffer[ANIM_SIZE];
+    
+    memset(buffer, 0, size);
+
     for (uint16_t i = 0; i < size; i++) {
-        char byte = pgm_read_byte(&data[i]);
-        if (x_shift > 0) {
-            buffer[i] = byte << x_shift;
-        } else if (x_shift < 0) {
-            buffer[i] = byte >> (-x_shift);
-        } else {
-            buffer[i] = byte;
+        // Shift the index (Horizontal move)
+        // One 'i' represents one vertical column of 8 pixels
+        int16_t target_idx = i + x_shift;
+
+        if (target_idx >= 0 && target_idx < size) {
+            buffer[target_idx] = pgm_read_byte(&data[i]);
         }
     }
     oled_write_raw(buffer, size);
