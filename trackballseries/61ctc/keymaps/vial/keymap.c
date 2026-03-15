@@ -1075,8 +1075,7 @@ bool oled_task_user(void) {
     led_usb_state = host_keyboard_led_state();
     
     if (is_keyboard_master()) {
-        //master_data();
-		render_luna();
+        master_data();
     }
 
     else {
