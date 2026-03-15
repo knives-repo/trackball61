@@ -931,31 +931,12 @@ static void render_luna(int LUNA_X, int LUNA_Y) {
 
     /* animation */
     void animate_luna(void) {
-        /* jump */
-        if (isJumping || !showedJump) {
-            /* clear */
-            oled_set_cursor(LUNA_X, LUNA_Y + 2);
-            oled_write("     ", false);
-
-            oled_set_cursor(LUNA_X, LUNA_Y - 1);
-
-            showedJump = true;
-        } else {
-            /* clear */
-            oled_set_cursor(LUNA_X, LUNA_Y - 1);
-            oled_write("     ", false);
-
-            oled_set_cursor(LUNA_X, LUNA_Y);
-        }
-
-        /* switch frame */
-        current_frame1 = (current_frame1 + 1) % 2;
-
-        /* current status */
-        if (current_wpm <= MIN_WALK_SPEED) {
+		if (current_wpm <= MIN_WALK_SPEED) {
+            current_frame1 = (current_frame1 + 1) % 2; // 2 frames for sit
             oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
 
         } else if (current_wpm <= MIN_RUN_SPEED) {
+            current_frame1 = (current_frame1 + 1) % 9; // 9 frames for walk
             oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
         }
     }
