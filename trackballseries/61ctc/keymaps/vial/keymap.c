@@ -781,24 +781,34 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
 }};
 
 
-    /* animation */
+/* animation */
     void animate_luna(void) {
-		if (current_wpm <= MIN_WALK_SPEED) {
-            current_frame1 = (current_frame1 + 1) % 20; // 20 frames for sit
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-            oled_write_raw_P(still[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(wind[current_frame1], ANIM_SIZE1);
-			oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
+        if (current_wpm <= MIN_WALK_SPEED) {
+            // Total sequence: 10 (still) + 1 (wind) + 10 (sit 1) + 10 (sit 2) = 31 frames
+            current_frame1 = (current_frame1 + 1) % 31; 
 
-        } else /* if (current_wpm <= MIN_RUN_SPEED) */ {
-            current_frame1 = (current_frame1 + 1) % 4; // 4 frames for walk
+            if (current_frame1 < 10) {
+                // Frames 0-9: Play "still" 
+                oled_write_raw_P(still[0], ANIM_SIZE1);
+            } 
+            else if (current_frame1 == 10) {
+                // Frame 10: Play "wind" 
+                oled_write_raw_P(wind[0], ANIM_SIZE1);
+            } 
+            else if (current_frame1 < 21) {
+                // Frames 11-20: Play "sit" (First time)
+                // 11-11 = 0, 20-11 = 9
+                oled_write_raw_P(sit[current_frame1 - 11], ANIM_SIZE1);
+            }
+            else {
+                // Frames 21-30: Play "sit" (Second time)
+                // 21-21 = 0, 30-21 = 9
+                oled_write_raw_P(sit[current_frame1 - 21], ANIM_SIZE1);
+            }
+        }
+        else {
+            // WPM > MIN_WALK_SPEED: Walking state
+            current_frame1 = (current_frame1 + 1) % 4; // Assuming 4 frames for walk
             oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
         }
     }
