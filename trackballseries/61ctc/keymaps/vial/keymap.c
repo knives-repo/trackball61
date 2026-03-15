@@ -1071,7 +1071,7 @@ static void master_data(void) {
 
 bool oled_task_user(void) {
 
-    current_wpm   = get_current_wpm();
+    // current_wpm   = get_current_wpm();
     led_usb_state = host_keyboard_led_state();
     
     if (is_keyboard_master()) {
