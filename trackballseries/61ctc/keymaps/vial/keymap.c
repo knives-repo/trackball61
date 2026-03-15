@@ -810,8 +810,13 @@ static const char PROGMEM wind[1][ANIM_SIZE1] = {
             }
         }
     	else if (current_wpm <= MIN_RUN_SPEED) {
-        	current_frame1 = (current_frame1 + 1) % 4; 
-        	oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
+        	current_frame1 = (current_frame1 + 1) % 5; 
+			if (current_frame1 < 5) {
+        		oled_write_raw_P(sit[current_frame1 + 6], ANIM_SIZE1);
+			}
+			else {
+        		oled_write_raw_P(sit[0], ANIM_SIZE1);
+			}
     	}
         else {
             current_frame1 = (current_frame1 + 1) % 4;
