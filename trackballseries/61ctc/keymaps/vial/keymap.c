@@ -99,10 +99,10 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_DELETE):
         case LALT_T(KC_BSPC):
-        case RSFT_T(KC_EQUAL):
+        case RSFT_T(KC_SLSH):
         case LT(5, KC_SCLN):
         case LT(3, KC_Z):
-        case LT(3, KC_SLSH):
+        case LT(3, KC_DOT):
             // Immediately select the hold action when another key is tapped.
             return true;
         default:
@@ -147,7 +147,7 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
        KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, LT(5, KC_SCLN), KC_QUOT,
   // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
-       LSFT_T(KC_BSLS), LT(3, KC_Z), KC_X, KC_C, KC_V, KC_B, LALT_T(KC_BSPC), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, KC_DOT, LT(3, KC_SLSH), RSFT_T(KC_EQUAL),
+       LSFT_T(KC_BSLS), LT(3, KC_Z), KC_X, KC_C, KC_V, KC_B, LALT_T(KC_BSPC), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, LT(3, KC_DOT), RSFT_T(KC_SLSH), KC_EQUAL,
   // ╰──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────╯
        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_GRV, LCTL_T(KC_DELETE), LT(4, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(4, KC_ENTER), KC_LBRC, KC_RBRC
   //                            ╰───────────────────────────╯                           ╰──────────────────╯
@@ -182,13 +182,13 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
        KC_TRNS, KC_TRNS, KC_TRNS, QM_PND, QM_EURO, QM_SLCR,                      KC_TRNS, QM_PLCR, QM_BULL, KC_TRNS, KC_TRNS, QM_EMD,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_TRNS,                              KC_TRNS, KC_7, KC_8, KC_9, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_SLSH,                               KC_7, KC_8, KC_9, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_TRNS,                              KC_TRNS, KC_4, KC_5, KC_6, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_MINS,                               KC_4, KC_5, KC_6, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_TRNS, KC_TRNS,            KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_EQUAL, KC_LSFT,            KC_LSFT,  KC_1, KC_2, KC_3, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DOT, KC_TRNS, KC_0,             KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DOT, KC_0, KC_TRNS,             KC_TRNS, KC_0,                     KC_TRNS, KC_TRNS
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
   [LAYER_FUNCTION] = LAYOUT(
