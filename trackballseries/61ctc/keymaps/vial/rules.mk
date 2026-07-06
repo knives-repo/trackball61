@@ -1,3 +1,6 @@
+SRC += kodama.c
+SRC += ocean_dream.c
+
 VIA_ENABLE = no
 VIAL_ENABLE = no
 VIALRGB_ENABLE = no
