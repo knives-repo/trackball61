@@ -18,6 +18,7 @@ enum custom_keycodes {
 enum charybdis_keymap_layers {
     LAYER_MAC = 0,
     LAYER_WIN,
+    LAYER_GAME,
     LAYER_MOUSE,
     LAYER_SPECIAL,
     LAYER_FUNCTION,
@@ -84,10 +85,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
         case LALT_T(KC_BSPC):
-        case LT(4, KC_ENTER):
+        case LT(5, KC_ENTER):
             return 125;
         case LGUI_T(KC_DELETE):
-        case LT(5, KC_SCLN):
+        case LT(6, KC_SCLN):
             return 150;
         default:
             return TAPPING_TERM;
@@ -98,9 +99,9 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case LGUI_T(KC_DELETE):
         case LALT_T(KC_BSPC):
         case RSFT_T(KC_SLSH):
-        case LT(5, KC_SCLN):
-        case LT(3, KC_Z):
-        case LT(3, KC_DOT):
+        case LT(6, KC_SCLN):
+        case LT(4, KC_Z):
+        case LT(4, KC_DOT):
             // Immediately select the hold action when another key is tapped.
             return true;
         default:
@@ -114,7 +115,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
-        case LT(4, KC_ENTER):
+        case LT(5, KC_ENTER):
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -128,8 +129,8 @@ bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
         case LSFT_T(KC_BSLS):
         case LCTL_T(KC_DELETE):
         case LCTL_T(KC_SPACE):
-        case LT(4, KC_ENTER):
-        case LT(5, KC_SCLN):
+        case LT(5, KC_ENTER):
+        case LT(6, KC_SCLN):
             return true;
     }
     return false; // Disable otherwise.
@@ -143,11 +144,11 @@ MT(MOD_LCTL | MOD_LSFT | MOD_LGUI, KC_ESC), KC_1, KC_2, KC_3,KC_4, KC_5, KC_6, K
   // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
 MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC,
   // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
-       KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, LT(5, KC_SCLN), KC_QUOT,
+       KC_LALT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, LT(6, KC_SCLN), KC_QUOT,
   // ├──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────┤
-       LSFT_T(KC_BSLS), LT(3, KC_Z), KC_X, KC_C, KC_V, KC_B, LALT_T(KC_BSPC), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, LT(3, KC_DOT), RSFT_T(KC_SLSH), KC_EQUAL,
+       LSFT_T(KC_BSLS), LT(4, KC_Z), KC_X, KC_C, KC_V, KC_B, LALT_T(KC_BSPC), RCTL_T(KC_DELETE), KC_N, KC_M, KC_COMM, LT(4, KC_DOT), RSFT_T(KC_SLSH), KC_EQUAL,
   // ╰──────────────────────────────────────────────────────┤                           ├──────────────────────────────────────────────────────╯
-       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_GRV, LCTL_T(KC_DELETE), LT(4, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(4, KC_ENTER), KC_LBRC, KC_RBRC
+       KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS, LCTL_T(KC_DELETE), LT(5, KC_ENTER), LGUI_T(KC_SPACE), RGUI_T(KC_SPACE),  LT(5, KC_ENTER), KC_LBRC, KC_RBRC
   //                            ╰───────────────────────────╯                           ╰──────────────────╯
   ),
 [LAYER_WIN] = LAYOUT(
@@ -160,7 +161,20 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGUI_T(KC_DELETE), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), LT(4, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(4, KC_ENTER), KC_TRNS, KC_TRNS                              
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LGUI_T(KC_DELETE), LT(5, KC_ENTER), LCTL_T(KC_SPACE), RCTL_T(KC_SPACE), LT(5, KC_ENTER), KC_TRNS, KC_TRNS                              
+  //                            ╰───────────────────────────╯               ╰──────────────────╯
+),
+  [LAYER_GAME] = LAYOUT(
+  // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
+       KC_ESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LCTL, KC_TRNS, KC_SPACE,             KC_TRNS, KC_TRNS,                    KC_TRNS, KC_TRNS                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
   [LAYER_MOUSE] = LAYOUT(
@@ -178,9 +192,9 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
 ),
   [LAYER_SPECIAL] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
-       KC_TRNS, KC_TRNS, KC_TRNS, QM_PND, QM_EURO, QM_SLCR,                      KC_TRNS, QM_PLCR, QM_BULL, KC_TRNS, KC_TRNS, QM_EMD,
+       KC_GRV, KC_TRNS, KC_TRNS, QM_PND, QM_EURO, QM_SLCR,                      KC_TRNS, QM_PLCR, QM_BULL, KC_TRNS, KC_TRNS, QM_EMD,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_SLSH,                               KC_7, KC_8, KC_9, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_7, KC_8, KC_9, KC_SLSH,                               KC_7, KC_8, KC_9, KC_LBRC, KC_RBRC, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_4, KC_5, KC_6, KC_MINS,                               KC_4, KC_5, KC_6, KC_TRNS, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
@@ -199,7 +213,7 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY, KC_MUTE,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_TRNS,                     KC_TRNS, KC_F15                             
+       KC_TRNS, TG(2), TG(1), QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, KC_TRNS,                     KC_TRNS, KC_F15                             
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
    [LAYER_POINTER] = LAYOUT(
@@ -212,7 +226,7 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     T_SAVE, AUTO_MODE_TOGGLE, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              TG(1), QK_BOOT                 
+       QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              KC_TRNS, KC_TRNS                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 };
@@ -361,6 +375,9 @@ static void slave_data(void) {
             break;
         case LAYER_WIN:
             oled_write(" WIN ", false);
+            break;
+        case LAYER_GAME:
+            oled_write(":GAME", false);
             break;
         case LAYER_MOUSE:
             oled_write("TRACK", false);
