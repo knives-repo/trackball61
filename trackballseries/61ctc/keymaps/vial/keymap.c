@@ -1,6 +1,6 @@
-
 #include QMK_KEYBOARD_H
-#include "ocean_dream.c"
+#include "ocean_dream.h"
+#include "kodama.h"
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
@@ -42,12 +42,12 @@ typedef union {
     uint32_t raw1;
     struct {
         uint16_t auto_time: 13;
-        uint8_t threshold_value : 3; //
-        bool    is_auto_enabled : 1;  //新加的
-        bool    is_oled_enabled : 1;  //新加的
+        uint8_t threshold_value : 3; 
+        bool    is_auto_enabled : 1; 
+        bool    is_oled_enabled : 1; 
     };
 } auto_config_t;
-//2的数字范围是从0到3， 4是16位，5是0-31位，6是即0到63。
+
 static auto_config_t user_config;
 
 void keyboard_post_init_user(void){
@@ -66,13 +66,11 @@ void eeconfig_init_user(void){
 #define CHARYBDIS_AUTO_MAX_TIMEOUT_MS 3000
 #define CHARYBDIS_AUTO_MIN_TIMEOUT_MS 0
 
-//Charybdis轨迹球滚动停止后多长时间没操作返回原来层，默认1秒
+// Charybdis trackball settings
 #ifndef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS
 #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS user_config.auto_time
 #endif
 
-
-//Charybdis自动指针层触发阈值，值越低越灵敏 user_config.threshold_value 0-7
 #ifndef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
 #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD user_config.threshold_value
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
@@ -220,23 +218,16 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
 };
 
 // clang-format on
-//用来检测自动切换鼠标层的地方，如果鼠标的水平位移x或垂直位移y的绝对值大于设定的阈值
-//自动切换到LAYER_POINTER鼠标层，并将rgb改为绿色
-//如果没有开启这个不起作用
+
 #ifdef POINTING_DEVICE_ENABLE
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-//发送传感器数据的回调，以便用户代码可以拦截和修改数据。返回鼠标报告。
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if(user_config.is_auto_enabled){
-//            如果鼠标的水平或垂直移动距离超过了阈值 CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
             if (abs(mouse_report.x) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
-                //如果自动切换鼠标层的定时器为0
                 if (auto_pointer_layer_timer == 0) {
-                    // layer_on(LAYER_POINTER);
                     layer_on(LAYER_MOUSE);
                 }
-                //更新自动切换鼠标层的定时器
                 auto_pointer_layer_timer = timer_read();
             }
     }
@@ -246,21 +237,15 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 
 void matrix_scan_user(void) {
     if(user_config.is_auto_enabled){
-         // 如果自动切换鼠标层的定时器不为0，并且当前时间与定时器启动时间的差值大于等于 CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MSn
         if (auto_pointer_layer_timer != 0 && TIMER_DIFF_16(timer_read(), auto_pointer_layer_timer) >= CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS) {
-            // 将自动切换鼠标层的定时器重置为0
             auto_pointer_layer_timer = 0;
-            // layer_off(LAYER_POINTER);
             layer_off(LAYER_MOUSE);
         };
     }
-
 }
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 
-//在图层变化时自动启用狙击模式，切换到LAYER_POINTER指针层启用阻击模式
-//和自动启用阻击模式相关
 #ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
 layer_state_t layer_state_set_user(layer_state_t state) {
     charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
@@ -269,61 +254,57 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
 #endif     // POINTING_DEVICE_ENABLE
 
-//和rgb有关可以不用管
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
 
-//自定义键值
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
-        // toggle auto mouse enable key
         case AUTO_MODE_TOGGLE:
-            if(record->event.pressed) { // key down
+            if(record->event.pressed) {
                 user_config.is_auto_enabled ^=  1;
-            } // 是否开启自动切层
-            return false; // prevent further processing of keycode
+            } 
+            return false;
         case AUTO_TIME_50:
-            if(record->event.pressed) { // key down
-            user_config.auto_time += 50;
-            if(user_config.auto_time > CHARYBDIS_AUTO_MAX_TIMEOUT_MS){
-                user_config.auto_time = CHARYBDIS_AUTO_MIN_TIMEOUT_MS;
-            }
-            } // 增加轨迹球超时时间
-            return false; // prevent further processing of keycode
+            if(record->event.pressed) { 
+                user_config.auto_time += 50;
+                if(user_config.auto_time > CHARYBDIS_AUTO_MAX_TIMEOUT_MS){
+                    user_config.auto_time = CHARYBDIS_AUTO_MIN_TIMEOUT_MS;
+                }
+            } 
+            return false;
         case AUTO_TIME_50R:
-            if(record->event.pressed) { // key down
-            user_config.auto_time -= 50;
-            if(user_config.auto_time > CHARYBDIS_AUTO_MAX_TIMEOUT_MS){
-                user_config.auto_time = CHARYBDIS_AUTO_MAX_TIMEOUT_MS;
-            }
-            } // 增加轨迹球超
-            return false; // prevent further processing of keycode
+            if(record->event.pressed) {
+                user_config.auto_time -= 50;
+                if(user_config.auto_time > CHARYBDIS_AUTO_MAX_TIMEOUT_MS){
+                    user_config.auto_time = CHARYBDIS_AUTO_MAX_TIMEOUT_MS;
+                }
+            } 
+            return false; 
         case AUTO_TIME_100:
-            if(record->event.pressed) { // key down
-            user_config.auto_time += 100;
-            if(user_config.auto_time > CHARYBDIS_AUTO_MAX_TIMEOUT_MS){
-                user_config.auto_time = 0;
+            if(record->event.pressed) { 
+                user_config.auto_time += 100;
+                if(user_config.auto_time > CHARYBDIS_AUTO_MAX_TIMEOUT_MS){
+                    user_config.auto_time = 0;
+                }
             }
-            } // 增加轨迹球超时时间
-            return false; // prevent further processing of keycode
+            return false;
         case AUTO_THRESHOLD:
-            if(record->event.pressed) { // key down
+            if(record->event.pressed) {
                 user_config.threshold_value +=  1;
-//                eeconfig_update_user(user_config.raw1);
-            } // 增加轨迹球触发阈值
-            return false; // prevent further processing of keycode
+            } 
+            return false;
         case TInfo:
-            if(record->event.pressed) { // key down
+            if(record->event.pressed) {
                 user_config.is_oled_enabled ^=  1;
-            } // 显示当前轨迹球的设置
-            return false; // prevent further processing of keycode
+            }
+            return false; 
         case T_SAVE:
-            if(record->event.pressed) { // key down
+            if(record->event.pressed) { 
                 eeconfig_update_user(user_config.raw1);
-            } // 保存自动切层的设置
-            return false; // prevent further processing of keycode
+            }
+            return false; 
         case QM_PND: // Alt + 0163
             SEND_STRING(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_1)SS_TAP(X_KP_6)SS_TAP(X_KP_3)));
             return false;
@@ -353,323 +334,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     return true;
 }
 
-
 /* oled stuff :) */
 #ifdef OLED_ENABLE
-#define IDLE_FRAMES 5
-#define IDLE_SPEED 20 // 低于此wpm值，动画将空闲
-#define TAP_FRAMES 2
-#define TAP_SPEED 40 // 以上的wpm值输入动画触发
-#define ANIM_FRAME_DURATION 200 // 每帧持续的时间(毫秒
-#define ANIM_SIZE 636 // number of bytes in array
-
-
-uint32_t anim_timer         = 0;
-uint32_t anim_sleep         = 0;
-uint8_t  current_idle_frame = 0;
-uint8_t current_tap_frame = 0;
-
-uint16_t startup_timer = 0;
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
      if (is_keyboard_master()){
-        // Look at the saved config immediately on boot
         if (user_config.is_oled_enabled) {
             return OLED_ROTATION_0;    // TInfo Mode
         } else {
             return OLED_ROTATION_270;  // Ocean Dream Mode
         }
     } else {
-        return OLED_ROTATION_0;
-        }
-}
-
-
-void render_space(void) {
-    oled_write_P(PSTR("     "), false);
-}
-
-
-void render_logo(void) {
-        oled_write_P(PSTR("knives"), false);
-        oled_write_P(PSTR("-repo "), false);
-        oled_write_P(PSTR("board"), false);
-
-}
-
-void render_mod_status_gui_alt(uint8_t modifiers) {
-    static const char PROGMEM gui_off_1[] = {0x85, 0x86, 0};
-    static const char PROGMEM gui_off_2[] = {0xa5, 0xa6, 0};
-    static const char PROGMEM gui_on_1[] = {0x8d, 0x8e, 0};
-    static const char PROGMEM gui_on_2[] = {0xad, 0xae, 0};
-
-    static const char PROGMEM alt_off_1[] = {0x87, 0x88, 0};
-    static const char PROGMEM alt_off_2[] = {0xa7, 0xa8, 0};
-    static const char PROGMEM alt_on_1[] = {0x8f, 0x90, 0};
-    static const char PROGMEM alt_on_2[] = {0xaf, 0xb0, 0};
-
-    // fillers between the modifier icons bleed into the icon frames
-    static const char PROGMEM off_off_1[] = {0xc5, 0};
-    static const char PROGMEM off_off_2[] = {0xc6, 0};
-    static const char PROGMEM on_off_1[] = {0xc7, 0};
-    static const char PROGMEM on_off_2[] = {0xc8, 0};
-    static const char PROGMEM off_on_1[] = {0xc9, 0};
-    static const char PROGMEM off_on_2[] = {0xca, 0};
-    static const char PROGMEM on_on_1[] = {0xcb, 0};
-    static const char PROGMEM on_on_2[] = {0xcc, 0};
-
-    if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(gui_on_1, false);
-    } else {
-        oled_write_P(gui_off_1, false);
-    }
-
-    if ((modifiers & MOD_MASK_GUI) && (modifiers & MOD_MASK_ALT)) {
-        oled_write_P(on_on_1, false);
-    } else if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(on_off_1, false);
-    } else if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(off_on_1, false);
-    } else {
-        oled_write_P(off_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(alt_on_1, false);
-    } else {
-        oled_write_P(alt_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(gui_on_2, false);
-    } else {
-        oled_write_P(gui_off_2, false);
-    }
-
-    if (modifiers & MOD_MASK_GUI & MOD_MASK_ALT) {
-        oled_write_P(on_on_2, false);
-    } else if(modifiers & MOD_MASK_GUI) {
-        oled_write_P(on_off_2, false);
-    } else if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(off_on_2, false);
-    } else {
-        oled_write_P(off_off_2, false);
-    }
-
-    if(modifiers & MOD_MASK_ALT) {
-        oled_write_P(alt_on_2, false);
-    } else {
-        oled_write_P(alt_off_2, false);
-    }
-}
-void render_mod_status_ctrl_shift(uint8_t modifiers) {
-    static const char PROGMEM ctrl_off_1[] = {0x89, 0x8a, 0};
-    static const char PROGMEM ctrl_off_2[] = {0xa9, 0xaa, 0};
-    static const char PROGMEM ctrl_on_1[] = {0x91, 0x92, 0};
-    static const char PROGMEM ctrl_on_2[] = {0xb1, 0xb2, 0};
-
-    static const char PROGMEM shift_off_1[] = {0x8b, 0x8c, 0};
-    static const char PROGMEM shift_off_2[] = {0xab, 0xac, 0};
-    static const char PROGMEM shift_on_1[] = {0xcd, 0xce, 0};
-    static const char PROGMEM shift_on_2[] = {0xcf, 0xd0, 0};
-
-    // fillers between the modifier icons bleed into the icon frames
-    static const char PROGMEM off_off_1[] = {0xc5, 0};
-    static const char PROGMEM off_off_2[] = {0xc6, 0};
-    static const char PROGMEM on_off_1[] = {0xc7, 0};
-    static const char PROGMEM on_off_2[] = {0xc8, 0};
-    static const char PROGMEM off_on_1[] = {0xc9, 0};
-    static const char PROGMEM off_on_2[] = {0xca, 0};
-    static const char PROGMEM on_on_1[] = {0xcb, 0};
-    static const char PROGMEM on_on_2[] = {0xcc, 0};
-
-    if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(ctrl_on_1, false);
-    } else {
-        oled_write_P(ctrl_off_1, false);
-    }
-
-    if ((modifiers & MOD_MASK_CTRL) && (modifiers & MOD_MASK_SHIFT)) {
-        oled_write_P(on_on_1, false);
-    } else if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(on_off_1, false);
-    } else if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(off_on_1, false);
-    } else {
-        oled_write_P(off_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(shift_on_1, false);
-    } else {
-        oled_write_P(shift_off_1, false);
-    }
-
-    if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(ctrl_on_2, false);
-    } else {
-        oled_write_P(ctrl_off_2, false);
-    }
-
-    if (modifiers & MOD_MASK_CTRL & MOD_MASK_SHIFT) {
-        oled_write_P(on_on_2, false);
-    } else if(modifiers & MOD_MASK_CTRL) {
-        oled_write_P(on_off_2, false);
-    } else if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(off_on_2, false);
-    } else {
-        oled_write_P(off_off_2, false);
-    }
-
-    if(modifiers & MOD_MASK_SHIFT) {
-        oled_write_P(shift_on_2, false);
-    } else {
-        oled_write_P(shift_off_2, false);
+        return OLED_ROTATION_270;      // Kodama Animation (Vertical)
     }
 }
 
-/* settings */
-#    define MIN_WALK_SPEED      10
-#    define MIN_RUN_SPEED       40
-
-/* advanced settings */
-#    define ANIM_FRAME_DURATION 200  // how long each frame lasts in ms
-#    define ANIM_SIZE1           512 // originally 96   // number of bytes in array. If you change sprites, minimize for adequate firmware size. max is 1024
-
-/* timers */
-uint32_t anim_timer1 = 0;
-
-/* current frame */
-uint8_t current_frame1 = 0;
-
-/* status variables */
-// int   current_wpm = 0; // commented out as it is already in ocean_dream.c
-led_t led_usb_state;
-
-bool isSneaking = false;
-bool isJumping  = false;
-bool showedJump = true;
-
-
-static void render_luna(int LUNA_X, int LUNA_Y) {
-    /* Sit */
-    static const char PROGMEM sit[2][ANIM_SIZE1] = {/* 'sit1', 32x22px */
-                                                   {
-                                                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1c, 0x02, 0x05, 0x02, 0x24, 0x04, 0x04, 0x02, 0xa9, 0x1e, 0xe0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x10, 0x08, 0x68, 0x10, 0x08, 0x04, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x06, 0x82, 0x7c, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x04, 0x0c, 0x10, 0x10, 0x20, 0x20, 0x20, 0x28, 0x3e, 0x1c, 0x20, 0x20, 0x3e, 0x0f, 0x11, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                   },
-
-                                                   /* 'sit2', 32x22px */
-                                                   {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1c, 0x02, 0x05, 0x02, 0x24, 0x04, 0x04, 0x02, 0xa9, 0x1e, 0xe0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x90, 0x08, 0x18, 0x60, 0x10, 0x08, 0x04, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x0e, 0x82, 0x7c, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x04, 0x0c, 0x10, 0x10, 0x20, 0x20, 0x20, 0x28, 0x3e, 0x1c, 0x20, 0x20, 0x3e, 0x0f, 0x11, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}};
-
-
-    /* Walk */
-    static const char PROGMEM walk[2][ANIM_SIZE1] = {/* 'walk1', 32x22px */
-                                                    {
-                                                        0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x40, 0x20, 0x10, 0x90, 0x90, 0x90, 0xa0, 0xc0, 0x80, 0x80, 0x80, 0x70, 0x08, 0x14, 0x08, 0x90, 0x10, 0x10, 0x08, 0xa4, 0x78, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x08, 0xfc, 0x01, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x18, 0xea, 0x10, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x1c, 0x20, 0x20, 0x3c, 0x0f, 0x11, 0x1f, 0x03, 0x06, 0x18, 0x20, 0x20, 0x3c, 0x0c, 0x12, 0x1e, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                    },
-
-                                                    /* 'walk2', 32x22px */
-                                                    {
-                                                        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x40, 0x20, 0x20, 0x20, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x10, 0x28, 0x10, 0x20, 0x20, 0x20, 0x10, 0x48, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x20, 0xf8, 0x02, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x10, 0x30, 0xd5, 0x20, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f, 0x20, 0x30, 0x0c, 0x02, 0x05, 0x09, 0x12, 0x1e, 0x02, 0x1c, 0x14, 0x08, 0x10, 0x20, 0x2c, 0x32, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                    }};
-
-    /* Run */
-    static const char PROGMEM run[2][ANIM_SIZE1] = {/* 'run1', 32x22px */
-                                                   {
-                                                       0x00, 0x00, 0x00, 0x00, 0xe0, 0x10, 0x08, 0x08, 0xc8, 0xb0, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x40, 0x40, 0x3c, 0x14, 0x04, 0x08, 0x90, 0x18, 0x04, 0x08, 0xb0, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0xc4, 0xa4, 0xfc, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xc8, 0x58, 0x28, 0x2a, 0x10, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0e, 0x09, 0x04, 0x04, 0x04, 0x04, 0x02, 0x03, 0x02, 0x01, 0x01, 0x02, 0x02, 0x04, 0x08, 0x10, 0x26, 0x2b, 0x32, 0x04, 0x05, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                   },
-
-                                                   /* 'run2', 32x22px */
-                                                   {
-                                                       0x00, 0x00, 0x00, 0xe0, 0x10, 0x10, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0x80, 0x78, 0x28, 0x08, 0x10, 0x20, 0x30, 0x08, 0x10, 0x20, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x04, 0x08, 0x10, 0x11, 0xf9, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x10, 0xb0, 0x50, 0x55, 0x20, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x0c, 0x10, 0x20, 0x28, 0x37, 0x02, 0x1e, 0x20, 0x20, 0x18, 0x0c, 0x14, 0x1e, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                   }};
-
-    /* Bark */
-    static const char PROGMEM bark[2][ANIM_SIZE1] = {/* 'bark1', 32x22px */
-                                                    {
-                                                        0x00, 0xc0, 0x20, 0x10, 0xd0, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0x40, 0x3c, 0x14, 0x04, 0x08, 0x90, 0x18, 0x04, 0x08, 0xb0, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x04, 0x08, 0x10, 0x11, 0xf9, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xc8, 0x48, 0x28, 0x2a, 0x10, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x0c, 0x10, 0x20, 0x28, 0x37, 0x02, 0x02, 0x04, 0x08, 0x10, 0x26, 0x2b, 0x32, 0x04, 0x05, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                    },
-
-                                                    /* 'bark2', 32x22px */
-                                                    {
-                                                        0x00, 0xe0, 0x10, 0x10, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0x40, 0x40, 0x2c, 0x14, 0x04, 0x08, 0x90, 0x18, 0x04, 0x08, 0xb0, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x04, 0x08, 0x10, 0x11, 0xf9, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xc0, 0x48, 0x28, 0x2a, 0x10, 0x0f, 0x20, 0x4a, 0x09, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x0c, 0x10, 0x20, 0x28, 0x37, 0x02, 0x02, 0x04, 0x08, 0x10, 0x26, 0x2b, 0x32, 0x04, 0x05, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                    }};
-
-    /* Sneak */
-    static const char PROGMEM sneak[2][ANIM_SIZE1] = {/* 'sneak1', 32x22px */
-                                                     {
-                                                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x40, 0x40, 0x40, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x40, 0x40, 0x80, 0x00, 0x80, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 0x21, 0xf0, 0x04, 0x02, 0x02, 0x02, 0x02, 0x03, 0x02, 0x02, 0x04, 0x04, 0x04, 0x03, 0x01, 0x00, 0x00, 0x09, 0x01, 0x80, 0x80, 0xab, 0x04, 0xf8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x1c, 0x20, 0x20, 0x3c, 0x0f, 0x11, 0x1f, 0x02, 0x06, 0x18, 0x20, 0x20, 0x38, 0x08, 0x10, 0x18, 0x04, 0x04, 0x02, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00,
-                                                     },
-
-                                                     /* 'sneak2', 32x22px */
-                                                     {
-                                                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x40, 0x40, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xa0, 0x20, 0x40, 0x80, 0xc0, 0x20, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e, 0x41, 0xf0, 0x04, 0x02, 0x02, 0x02, 0x03, 0x02, 0x02, 0x02, 0x04, 0x04, 0x02, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x40, 0x40, 0x55, 0x82, 0x7c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f, 0x20, 0x30, 0x0c, 0x02, 0x05, 0x09, 0x12, 0x1e, 0x04, 0x18, 0x10, 0x08, 0x10, 0x20, 0x28, 0x34, 0x06, 0x02, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                     }};
-
-    /* animation */
-    void animate_luna(void) {
-        /* jump */
-        if (isJumping || !showedJump) {
-            /* clear */
-            oled_set_cursor(LUNA_X, LUNA_Y + 2);
-            oled_write("     ", false);
-
-            oled_set_cursor(LUNA_X, LUNA_Y - 1);
-
-            showedJump = true;
-        } else {
-            /* clear */
-            oled_set_cursor(LUNA_X, LUNA_Y - 1);
-            oled_write("     ", false);
-
-            oled_set_cursor(LUNA_X, LUNA_Y);
-        }
-
-        /* switch frame */
-        current_frame1 = (current_frame1 + 1) % 2;
-
-        /* current status */
-        if (led_usb_state.caps_lock) {
-            oled_write_raw_P(bark[current_frame1], ANIM_SIZE1);
-
-        } else if (isSneaking) {
-            oled_write_raw_P(sneak[current_frame1], ANIM_SIZE1);
-
-        } else if (current_wpm <= MIN_WALK_SPEED) {
-            oled_write_raw_P(sit[current_frame1], ANIM_SIZE1);
-
-        } else if (current_wpm <= MIN_RUN_SPEED) {
-            oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
-
-        } else {
-            oled_write_raw_P(walk[current_frame1], ANIM_SIZE1);
-        }
-    }
-
-
-    /* animation timer */
-    if (timer_elapsed32(anim_timer1) > ANIM_FRAME_DURATION) {
-        anim_timer1 = timer_read32();
-        animate_luna();
-    }
-}
-
-
-//从设备
+// Slave Device Data
 static void slave_data(void) {
-    /* Print current mode */
-//    oled_set_cursor(0, 0);
-//    render_logo();
-//    oled_set_cursor(0, 4);
-
-//    render_mod_status_gui_alt(get_mods());
-//    render_mod_status_ctrl_shift(get_mods());
-
-//    oled_set_cursor(0, 8);
-//    render_space();
-
-    /* Print current layer */
-    oled_set_cursor(0, 0);
+    /* Print current layer at the bottom */
+    oled_set_cursor(0, 11);
     oled_write("", false);
 
     switch (get_highest_layer(layer_state)) {
@@ -694,18 +377,20 @@ static void slave_data(void) {
         default:
             oled_write("Undef", false);
     }
-       render_luna(0, 0); 
+    
+    // Render the Kodama animation on the slave half
+    animate_kodama(); 
 }
 
 static void tv_ms(void) {
-    // oled_clear(); //removed as added above
-    //   鼠标模式OLED
+    // 鼠标模式OLED
     oled_write_P(PSTR("AutoL:"), false);
     char auto_m[2];
     snprintf(auto_m, sizeof(auto_m), "%d", user_config.is_auto_enabled);
     oled_write(auto_m, false);
     trackball_oled_default();
-//    自动切层模式
+    
+    // 自动切层模式
     oled_write_P(PSTR("ATV  :"), false);
     char count_atv_str[2];
     snprintf(count_atv_str, sizeof(count_atv_str), "%d", CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD);
@@ -716,7 +401,7 @@ static void tv_ms(void) {
     snprintf(count_ams_str, sizeof(count_ams_str), "%d", CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS);
     oled_write_ln(count_ams_str, false);
 
-    //   滚动/阻击模式OLED
+    // 滚动/阻击模式OLED
     trackball_oled_info();
 
     #if OLED_TIMEOUT > 0
@@ -728,16 +413,14 @@ static void tv_ms(void) {
         oled_on();
     }
     #endif
-    }
+}
 
-//主设备OLED
+// Master Device OLED
 static void master_data(void) {
-    // Initialize to the OPPOSITE of current config to force a refresh on the first loop
-    static bool last_oled_state = 2; // Using 2 (or any non-bool) forces the first check
+    static bool last_oled_state = 2; // Initialize to OPPOSITE to force refresh on boot
 
     // If the OLED mode changed, update rotation and clear
     if (user_config.is_oled_enabled != last_oled_state) {
-
         if (user_config.is_oled_enabled) {
             // Text mode
             oled_init(OLED_ROTATION_0);   // horizontal
@@ -760,25 +443,11 @@ static void master_data(void) {
 }
 
 bool oled_task_user(void) {
-
-    current_wpm   = get_current_wpm();
-    led_usb_state = host_keyboard_led_state();
-    
     if (is_keyboard_master()) {
         master_data();
+    } else {
+        slave_data();
     }
-
-    else {
-            slave_data();
-        }
     return false;
 }
 #endif
-
-
-
-
-
-
-
-
