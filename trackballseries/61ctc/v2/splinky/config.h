@@ -60,7 +60,7 @@
 /* 使用 QMK 提供的分割传输时，确保当前 WPM 在从属设备上可用 */
 #define SPLIT_WPM_ENABLE
 #define WPM_SAMPLE_SECONDS 2
-#define OLED_FONT_H "keyboards/trackballseries/61ctc/keymaps/vial/glcdfont.c"
+#define OLED_FONT_H "keyboards/trackball61/trackballseries/61ctc/keymaps/vial/glcdfont.c"
 #define OLED_TIMEOUT 60000
 #endif
 
