@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "ocean_dream.h"
 #include "kodama.h"
+#include "os_detection.h"
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
@@ -50,6 +51,25 @@ typedef union {
 } auto_config_t;
 
 static auto_config_t user_config;
+
+// OS detection
+bool process_detected_host_os_user(os_variant_t detected_os) {
+    switch (detected_os) {
+        case OS_WINDOWS:
+        case OS_LINUX:
+            // Turn on LAYER_WIN when Windows is detected
+            layer_on(LAYER_WIN);
+            break;
+        case OS_MACOS:
+        case OS_IOS:
+            // Do nothing (or explicitly ensure LAYER_WIN is off to fall back to the default LAYER_MAC)
+            layer_off(LAYER_WIN);
+            break;
+        default:
+            break;
+    }
+    return true;
+}
 
 void keyboard_post_init_user(void){
     user_config.raw1 = eeconfig_read_user();

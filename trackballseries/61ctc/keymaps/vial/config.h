@@ -68,6 +68,9 @@
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #endif  // POINTING_DEVICE_ENABLE
 
+// Ensure OS detection callback only runs once per connection
+#define OS_DETECTION_SINGLE_REPORT
+
 /* Ocean Dream Animation Components */
 #define OCEAN_DREAM_ENABLE
 #define ENABLE_WAVE
