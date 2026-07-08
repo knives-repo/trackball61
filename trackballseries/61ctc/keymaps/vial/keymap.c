@@ -57,14 +57,30 @@ bool process_detected_host_os_user(os_variant_t detected_os) {
     switch (detected_os) {
         case OS_WINDOWS:
         case OS_LINUX:
-            // Turn on LAYER_WIN when Windows is detected
+            // Turn on LAYER_WIN when Windows/Linux is detected
             layer_on(LAYER_WIN);
+            
+            // Disable NKRO (switch to 6KRO) for maximum compatibility with KVMs/BIOS
+            if (keymap_config.nkro) {
+                keymap_config.nkro = 0;
+                eeconfig_update_keymap(&keymap_config); // <-- Fixed line
+                clear_keyboard();
+            }
             break;
+            
         case OS_MACOS:
         case OS_IOS:
-            // Do nothing (or explicitly ensure LAYER_WIN is off to fall back to the default LAYER_MAC)
+            // Ensure LAYER_WIN is off to fall back to the default LAYER_MAC
             layer_off(LAYER_WIN);
+            
+            // Automatically enable NKRO when Mac/iOS is detected
+            if (!keymap_config.nkro) {
+                keymap_config.nkro = 1;
+                eeconfig_update_keymap(&keymap_config);
+                clear_keyboard();
+            }
             break;
+            
         default:
             break;
     }
