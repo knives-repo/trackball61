@@ -254,7 +254,7 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
 ),
    [LAYER_POINTER] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮                   ╭──────────────────────────────────────────────────────╮
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOT,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, DPI_MOD, S_D_MOD, AUTO_TIME_50, AUTO_THRESHOLD, TInfo,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
@@ -262,7 +262,7 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     T_SAVE, AUTO_MODE_TOGGLE, MS_BTN3, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
-       QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              KC_TRNS, KC_TRNS                 
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, C(KC_UP),                              KC_TRNS, KC_TRNS                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
 ),
 };

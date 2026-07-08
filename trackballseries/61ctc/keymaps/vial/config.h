@@ -18,6 +18,7 @@
 
 /** other config */
 #define NKRO_DEFAULT_ON true
+#define SPLIT_USB_TIMEOUT 5000
 
 /** Tap-hold configuration */
 #define TAPPING_TERM 200
