@@ -402,7 +402,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 // Slave Device Data
 static void slave_data(void) {
     /* Print current layer at the bottom */
-    oled_set_cursor(0, 11);
+    oled_set_cursor(0, 12);
     oled_write("", false);
 
     switch (get_highest_layer(layer_state)) {

@@ -2,11 +2,11 @@
 #include <string.h> // For memset
 #include <stdlib.h> // For rand
 
-#define ANIM_FRAME_DURATION 16 // how long each frame lasts in ms
+#define ANIM_FRAME_DURATION 32 // Doubled from 16 to run at half speed
 #define ANIM_SIZE 192          // number of bytes in array
 #define MIN_WALK_SPEED 40
 
-#define FLY_ANIM_FRAME_DURATION 96 // slightly slower frame duration for the fly
+#define FLY_ANIM_FRAME_DURATION 72
 #define FLY_ANIM_SIZE 160          // 32 columns * 5 pages = 160 bytes
 
 static uint32_t anim_timer1 = 0;
@@ -20,6 +20,12 @@ static uint32_t fly_anim_timer = 0;
 static uint8_t fly_current_frame = 0;
 static int8_t fly_pixel_drift = 0;
 static uint32_t fly_drift_timer = 0;
+
+// Algorithmic Spore State
+#define NUM_SPORES 5
+static int8_t spore_x[NUM_SPORES] = {4, 12, 20, 26, 16};
+static int8_t spore_y[NUM_SPORES] = {0, 20, 40, 60, 80};
+static uint32_t spore_timer = 0;
 
 static const char PROGMEM still[1][ANIM_SIZE] = {
 {
@@ -507,6 +513,40 @@ static void update_fly_drift(void) {
     }
 }
 
+static void update_and_draw_spores(void) {
+    if (timer_elapsed32(spore_timer) > 80) { // Update spores every 80ms for a gentle float
+        spore_timer = timer_read32();
+        
+        // Erase old positions
+        for (int i = 0; i < NUM_SPORES; i++) {
+            oled_write_pixel(spore_x[i], spore_y[i], false);
+        }
+        
+        // Calculate new positions
+        for (int i = 0; i < NUM_SPORES; i++) {
+            spore_y[i] += 1;
+            spore_x[i] += (rand() % 3) - 1;
+            
+            // Keep within 32-pixel width bounds
+            if (spore_x[i] < 0) spore_x[i] = 31;
+            if (spore_x[i] > 31) spore_x[i] = 0;
+            
+            // Wrap around before hitting the layer text on page 12 (Y >= 95)
+            if (spore_y[i] >= 95) {
+                spore_y[i] = 0;
+                spore_x[i] = rand() % 32;
+            }
+        }
+    }
+    
+    // Draw the spores at their current position
+    // This runs every OLED task tick, ensuring they are beautifully painted 
+    // over the raw backgrounds drawn by the fly and kodama sequences!
+    for (int i = 0; i < NUM_SPORES; i++) {
+        oled_write_pixel(spore_x[i], spore_y[i], true);
+    }
+}
+
 void animate_kodama(void) {
     
     // --- FLY ANIMATION ---
@@ -534,7 +574,7 @@ void animate_kodama(void) {
     if (timer_elapsed32(anim_timer1) > ANIM_FRAME_DURATION) {
         anim_timer1 = timer_read32();
         
-        oled_set_cursor(0, 5); // Set cursor properly on screen for Kodama (Page 5)
+        oled_set_cursor(0, 6); // Set cursor properly on screen for Kodama (Shifted down from Page 5 to 6)
         update_kodama_drift();
         
         if (get_current_wpm() <= MIN_WALK_SPEED) {
@@ -563,4 +603,7 @@ void animate_kodama(void) {
             oled_write_raw_shift_P(walk[current_frame1], ANIM_SIZE, kodama_pixel_drift);
         }
     }
+    
+    // --- SPORES ANIMATION ---
+    update_and_draw_spores();
 }
