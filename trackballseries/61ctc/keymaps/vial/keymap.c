@@ -208,7 +208,7 @@ MT(MOD_LCTL | MOD_LGUI | MOD_LALT, KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R, 
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
        KC_LCTL, KC_Q, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, MS_BTN1, MS_BTN2, DRGSCRL, KC_TRNS, KC_TRNS,
   // ├──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────┤
-       KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, MO(5), KC_TRNS, KC_TRNS,
+       KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, MO(4), KC_TRNS, KC_TRNS,
   // ╰──────────────────────────────────────────────────────┤                   ├──────────────────────────────────────────────────────╯
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LCTL, KC_TRNS, KC_SPC,             KC_TRNS, KC_TRNS,                    KC_TRNS, KC_TRNS                 
   //                            ╰───────────────────────────╯               ╰──────────────────╯
