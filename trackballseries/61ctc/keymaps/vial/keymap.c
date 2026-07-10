@@ -456,16 +456,6 @@ static void tv_ms(void) {
 
     // 滚动/阻击模式OLED
     trackball_oled_info();
-
-    #if OLED_TIMEOUT > 0
-        if (last_input_activity_elapsed() > OLED_TIMEOUT) {
-            oled_clear();
-            oled_off();
-            return;
-    } else {
-        oled_on();
-    }
-    #endif
 }
 
 // Master Device OLED
@@ -496,6 +486,14 @@ static void master_data(void) {
 }
 
 bool oled_task_user(void) {
+    #if OLED_TIMEOUT > 0
+        if (last_input_activity_elapsed() > OLED_TIMEOUT) {
+            oled_off();
+            return false;
+    }
+        oled_on();
+    #endif
+
     if (is_keyboard_master()) {
         master_data();
     } else {
